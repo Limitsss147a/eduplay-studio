@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Check, X, Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -10,17 +10,23 @@ interface AnswerFeedbackProps {
 
 export const AnswerFeedback = ({ isCorrect, starsEarned = 1, onComplete }: AnswerFeedbackProps) => {
   const [show, setShow] = useState(false);
+  const onCompleteRef = useRef(onComplete);
+  
+  // Keep the ref updated
+  useEffect(() => {
+    onCompleteRef.current = onComplete;
+  }, [onComplete]);
 
   useEffect(() => {
     if (isCorrect !== null) {
       setShow(true);
       const timer = setTimeout(() => {
         setShow(false);
-        onComplete?.();
+        onCompleteRef.current?.();
       }, 1500);
       return () => clearTimeout(timer);
     }
-  }, [isCorrect, onComplete]);
+  }, [isCorrect]);
 
   if (!show || isCorrect === null) return null;
 
