@@ -142,6 +142,9 @@ export const WritingGame = () => {
     setIsDrawing(false);
   };
 
+  const addStarsRef = useRef(addStars);
+  addStarsRef.current = addStars;
+
   const handleSubmit = () => {
     if (!hasDrawn) return;
     
@@ -150,7 +153,7 @@ export const WritingGame = () => {
     // In a real app, you'd use ML to verify the drawing
     playCorrect();
     setCorrectCount(prev => prev + 1);
-    addStars('writing', 1);
+    addStarsRef.current('writing', 1);
     setFeedback(true);
   };
 

@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { GameCard } from '@/components/game/GameCard';
 import { useGame } from '@/contexts/GameContext';
 import { useSound } from '@/hooks/useSound';
-import { Calculator, BookOpen, PenTool, Palette, Star, Volume2, VolumeX, Music, Music2, Settings } from 'lucide-react';
+import { Calculator, BookOpen, PenTool, Palette, Star, Volume2, VolumeX, Music, Music2, RotateCcw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Index = () => {
   const navigate = useNavigate();
-  const { progress, totalStars, playerName } = useGame();
-  const { playSelect, isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic } = useSound();
+  const { progress, totalStars, playerName, resetProgress } = useGame();
+  const { playSelect, playClick, isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic } = useSound();
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   const handleGameSelect = (path: string) => {
     playSelect();
@@ -175,7 +176,49 @@ const Index = () => {
             </li>
           </ul>
         </div>
+
+        {/* Reset Progress Button */}
+        <button
+          onClick={() => {
+            playClick();
+            setShowResetConfirm(true);
+          }}
+          className="mt-6 w-full flex items-center justify-center gap-2 py-4 px-6 bg-destructive/10 text-destructive font-bold rounded-2xl hover:bg-destructive/20 transition-colors active:scale-95"
+        >
+          <RotateCcw className="w-5 h-5" />
+          <span>Reset Progres</span>
+        </button>
       </main>
+
+      {/* Reset Confirmation Modal */}
+      {showResetConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/30 backdrop-blur-md p-4">
+          <div className="bg-card rounded-3xl shadow-2xl p-6 max-w-sm w-full text-center animate-pop">
+            <span className="text-5xl block mb-4">⚠️</span>
+            <h2 className="text-xl font-bold text-foreground mb-2">Reset Progres?</h2>
+            <p className="text-muted-foreground mb-6">
+              Semua bintang dan progres belajarmu akan dihapus. Tindakan ini tidak bisa dibatalkan.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setShowResetConfirm(false)}
+                className="flex-1 py-3 px-4 bg-muted text-foreground font-bold rounded-2xl hover:bg-muted/80 transition-colors active:scale-95"
+              >
+                Batal
+              </button>
+              <button
+                onClick={() => {
+                  resetProgress();
+                  setShowResetConfirm(false);
+                }}
+                className="flex-1 py-3 px-4 bg-destructive text-destructive-foreground font-bold rounded-2xl hover:bg-destructive/90 transition-colors active:scale-95"
+              >
+                Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

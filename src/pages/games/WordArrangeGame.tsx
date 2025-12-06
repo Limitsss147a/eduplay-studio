@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { GameHeader } from '@/components/game/GameHeader';
 import { ProgressBar } from '@/components/game/ProgressBar';
 import { AnswerFeedback } from '@/components/game/AnswerFeedback';
@@ -142,6 +142,9 @@ export const WordArrangeGame = () => {
     initQuestion(questions[currentIndex]);
   };
 
+  const addStarsRef = useRef(addStars);
+  addStarsRef.current = addStars;
+
   const checkAnswer = useCallback(() => {
     const answer = selectedLetters.join('');
     const isCorrect = answer === questions[currentIndex].word;
@@ -149,13 +152,13 @@ export const WordArrangeGame = () => {
     if (isCorrect) {
       playCorrect();
       setCorrectCount(prev => prev + 1);
-      addStars('reading', 1);
+      addStarsRef.current('reading', 1);
     } else {
       playWrong();
     }
     
     setFeedback(isCorrect);
-  }, [selectedLetters, questions, currentIndex, playCorrect, playWrong, addStars]);
+  }, [selectedLetters, questions, currentIndex, playCorrect, playWrong]);
 
   useEffect(() => {
     if (questions.length > 0 && selectedLetters.length === questions[currentIndex]?.word.length) {
