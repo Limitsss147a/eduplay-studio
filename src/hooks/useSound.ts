@@ -90,21 +90,45 @@ export const useSound = () => {
     setIsBgMusicPlaying(true);
     const ctx = getAudioContext();
     
-    // Simple looping melody
-    const melody = [
-      { freq: 392, dur: 0.3 }, // G4
-      { freq: 440, dur: 0.3 }, // A4
-      { freq: 494, dur: 0.3 }, // B4
-      { freq: 523, dur: 0.3 }, // C5
-      { freq: 494, dur: 0.3 }, // B4
-      { freq: 440, dur: 0.3 }, // A4
-      { freq: 392, dur: 0.6 }, // G4
+    // Fun children's melody - more varied and cheerful
+    const melodies = [
+      // Melody 1: Twinkle-like
+      [
+        { freq: 523, dur: 0.25 }, // C5
+        { freq: 523, dur: 0.25 }, // C5
+        { freq: 784, dur: 0.25 }, // G5
+        { freq: 784, dur: 0.25 }, // G5
+        { freq: 880, dur: 0.25 }, // A5
+        { freq: 880, dur: 0.25 }, // A5
+        { freq: 784, dur: 0.5 },  // G5
+        { freq: 698, dur: 0.25 }, // F5
+        { freq: 698, dur: 0.25 }, // F5
+        { freq: 659, dur: 0.25 }, // E5
+        { freq: 659, dur: 0.25 }, // E5
+        { freq: 587, dur: 0.25 }, // D5
+        { freq: 587, dur: 0.25 }, // D5
+        { freq: 523, dur: 0.5 },  // C5
+      ],
+      // Melody 2: Happy bounce
+      [
+        { freq: 392, dur: 0.2 },  // G4
+        { freq: 440, dur: 0.2 },  // A4
+        { freq: 523, dur: 0.3 },  // C5
+        { freq: 440, dur: 0.2 },  // A4
+        { freq: 523, dur: 0.2 },  // C5
+        { freq: 659, dur: 0.4 },  // E5
+        { freq: 587, dur: 0.2 },  // D5
+        { freq: 523, dur: 0.2 },  // C5
+        { freq: 440, dur: 0.3 },  // A4
+        { freq: 392, dur: 0.4 },  // G4
+      ],
     ];
     
+    const currentMelody = melodies[Math.floor(Math.random() * melodies.length)];
     let noteIndex = 0;
+    
     const playNextNote = () => {
-      if (!isBgMusicPlaying) return;
-      const note = melody[noteIndex % melody.length];
+      const note = currentMelody[noteIndex % currentMelody.length];
       
       const oscillator = ctx.createOscillator();
       const gainNode = ctx.createGain();
@@ -115,7 +139,8 @@ export const useSound = () => {
       oscillator.frequency.value = note.freq;
       oscillator.type = 'sine';
       
-      gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
+      // Softer background volume
+      gainNode.gain.setValueAtTime(0.08, ctx.currentTime);
       gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + note.dur);
       
       oscillator.start(ctx.currentTime);
@@ -124,7 +149,7 @@ export const useSound = () => {
       noteIndex++;
     };
     
-    bgMusicIntervalRef.current = setInterval(playNextNote, 400);
+    bgMusicIntervalRef.current = setInterval(playNextNote, 350);
     playNextNote();
   }, [isMuted, isBgMusicPlaying, getAudioContext]);
 

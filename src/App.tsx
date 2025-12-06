@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GameProvider } from "@/contexts/GameContext";
 import Index from "./pages/Index";
 import CountingGame from "./pages/games/CountingGame";
-import ReadingGame from "./pages/games/ReadingGame";
+import WordArrangeGame from "./pages/games/WordArrangeGame";
 import WritingGame from "./pages/games/WritingGame";
 import DrawingGame from "./pages/games/DrawingGame";
 import NotFound from "./pages/NotFound";
@@ -23,7 +23,7 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/game/counting" element={<CountingGame />} />
-            <Route path="/game/reading" element={<ReadingGame />} />
+            <Route path="/game/reading" element={<WordArrangeGame />} />
             <Route path="/game/writing" element={<WritingGame />} />
             <Route path="/game/drawing" element={<DrawingGame />} />
             <Route path="*" element={<NotFound />} />
