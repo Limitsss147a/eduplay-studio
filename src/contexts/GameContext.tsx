@@ -14,6 +14,7 @@ interface GameContextType {
   completeLevel: (game: keyof GameProgress) => void;
   playerName: string;
   setPlayerName: (name: string) => void;
+  resetProgress: () => void;
 }
 
 const defaultProgress: GameProgress = {
@@ -71,6 +72,11 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('eduGamePlayerName', name);
   };
 
+  const resetProgress = () => {
+    setProgress(defaultProgress);
+    localStorage.setItem('eduGameProgress', JSON.stringify(defaultProgress));
+  };
+
   return (
     <GameContext.Provider value={{ 
       progress, 
@@ -78,7 +84,8 @@ export const GameProvider = ({ children }: { children: ReactNode }) => {
       addStars, 
       completeLevel, 
       playerName, 
-      setPlayerName: handleSetPlayerName 
+      setPlayerName: handleSetPlayerName,
+      resetProgress
     }}>
       {children}
     </GameContext.Provider>

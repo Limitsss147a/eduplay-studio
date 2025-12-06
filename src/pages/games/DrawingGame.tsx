@@ -138,13 +138,16 @@ export const DrawingGame = () => {
     setIsDrawing(false);
   };
 
+  const addStarsRef = useRef(addStars);
+  addStarsRef.current = addStars;
+
   const handleSubmit = () => {
     if (!hasDrawn) return;
     
     playClick();
     playCorrect();
     setCorrectCount(prev => prev + 1);
-    addStars('drawing', 1);
+    addStarsRef.current('drawing', 1);
     setFeedback(true);
   };
 

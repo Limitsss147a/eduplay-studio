@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { GameHeader } from '@/components/game/GameHeader';
 import { ProgressBar } from '@/components/game/ProgressBar';
 import { AnswerFeedback } from '@/components/game/AnswerFeedback';
@@ -115,6 +115,9 @@ export const CountingGame = () => {
     initGame();
   }, [initGame]);
 
+  const addStarsRef = useRef(addStars);
+  addStarsRef.current = addStars;
+
   const handleAnswer = (answer: number) => {
     if (feedback !== null || selectedAnswer !== null) return;
     
@@ -125,7 +128,7 @@ export const CountingGame = () => {
     if (isCorrect) {
       playCorrect();
       setCorrectCount(prev => prev + 1);
-      addStars('counting', 1);
+      addStarsRef.current('counting', 1);
     } else {
       playWrong();
     }
