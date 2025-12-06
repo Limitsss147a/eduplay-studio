@@ -95,8 +95,8 @@ const Index = () => {
           />
           
           <GameCard
-            title="Membaca"
-            description="Mengenal huruf dan kata-kata"
+            title="Susun Kata"
+            description="Susun huruf menjadi kata yang benar"
             icon={<BookOpen className="w-8 h-8 text-primary-foreground" />}
             variant="reading"
             stars={progress.reading.stars}
@@ -130,21 +130,25 @@ const Index = () => {
               label="Berhitung" 
               value={progress.counting.completed} 
               color="bg-primary" 
+              icon="🔢"
             />
             <StatItem 
-              label="Membaca" 
+              label="Susun Kata" 
               value={progress.reading.completed} 
               color="bg-secondary" 
+              icon="📝"
             />
             <StatItem 
               label="Menulis" 
               value={progress.writing.completed} 
               color="bg-game-writing" 
+              icon="✍️"
             />
             <StatItem 
               label="Menggambar" 
               value={progress.drawing.completed} 
               color="bg-accent" 
+              icon="🎨"
             />
           </div>
         </div>
@@ -176,9 +180,10 @@ const Index = () => {
   );
 };
 
-const StatItem = ({ label, value, color }: { label: string; value: number; color: string }) => (
-  <div className="bg-muted rounded-2xl p-4 text-center">
-    <div className={cn('w-3 h-3 rounded-full mx-auto mb-2', color)} />
+const StatItem = ({ label, value, color, icon }: { label: string; value: number; color: string; icon: string }) => (
+  <div className="bg-muted rounded-2xl p-4 text-center relative overflow-hidden">
+    <div className={cn('absolute top-0 left-0 w-full h-1', color)} />
+    <span className="text-2xl block mb-1">{icon}</span>
     <p className="text-2xl font-bold text-foreground">{value}</p>
     <p className="text-xs text-muted-foreground">{label}</p>
   </div>

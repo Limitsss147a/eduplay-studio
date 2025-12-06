@@ -44,7 +44,7 @@ const generateQuestions = (): Question[] => {
 };
 
 export const DrawingGame = () => {
-  const { progress, addStars } = useGame();
+  const { progress, addStars, completeLevel } = useGame();
   const { 
     playCorrect, playClick, playLevelComplete,
     isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic 
@@ -60,6 +60,7 @@ export const DrawingGame = () => {
   const [hasDrawn, setHasDrawn] = useState(false);
   const [selectedColor, setSelectedColor] = useState(colors[0]);
   const [showColors, setShowColors] = useState(false);
+  const [hasCompletedLevel, setHasCompletedLevel] = useState(false);
 
   const initGame = useCallback(() => {
     setQuestions(generateQuestions());
@@ -68,6 +69,7 @@ export const DrawingGame = () => {
     setIsComplete(false);
     setFeedback(null);
     setHasDrawn(false);
+    setHasCompletedLevel(false);
   }, []);
 
   useEffect(() => {
@@ -146,16 +148,20 @@ export const DrawingGame = () => {
     setFeedback(true);
   };
 
-  const handleNextQuestion = () => {
+  const handleNextQuestion = useCallback(() => {
     setFeedback(null);
     
     if (currentIndex + 1 >= questions.length) {
       playLevelComplete();
       setIsComplete(true);
+      if (!hasCompletedLevel) {
+        completeLevel('drawing');
+        setHasCompletedLevel(true);
+      }
     } else {
       setCurrentIndex(prev => prev + 1);
     }
-  };
+  }, [currentIndex, questions.length, playLevelComplete, hasCompletedLevel, completeLevel]);
 
   if (questions.length === 0) return null;
 

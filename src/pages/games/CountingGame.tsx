@@ -87,7 +87,7 @@ const generateOptions = (correctAnswer: number, max: number): number[] => {
 };
 
 export const CountingGame = () => {
-  const { progress, addStars } = useGame();
+  const { progress, addStars, completeLevel } = useGame();
   const { 
     playCorrect, playWrong, playClick, playLevelComplete,
     isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic 
@@ -99,6 +99,7 @@ export const CountingGame = () => {
   const [correctCount, setCorrectCount] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+  const [hasCompletedLevel, setHasCompletedLevel] = useState(false);
 
   const initGame = useCallback(() => {
     setQuestions(generateQuestions(progress.counting.level));
@@ -107,6 +108,7 @@ export const CountingGame = () => {
     setIsComplete(false);
     setFeedback(null);
     setSelectedAnswer(null);
+    setHasCompletedLevel(false);
   }, [progress.counting.level]);
 
   useEffect(() => {
@@ -131,17 +133,21 @@ export const CountingGame = () => {
     setFeedback(isCorrect);
   };
 
-  const handleNextQuestion = () => {
+  const handleNextQuestion = useCallback(() => {
     setFeedback(null);
     setSelectedAnswer(null);
     
     if (currentIndex + 1 >= questions.length) {
       playLevelComplete();
       setIsComplete(true);
+      if (!hasCompletedLevel) {
+        completeLevel('counting');
+        setHasCompletedLevel(true);
+      }
     } else {
       setCurrentIndex(prev => prev + 1);
     }
-  };
+  }, [currentIndex, questions.length, playLevelComplete, hasCompletedLevel, completeLevel]);
 
   if (questions.length === 0) return null;
 

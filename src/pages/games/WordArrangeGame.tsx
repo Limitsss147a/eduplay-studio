@@ -51,7 +51,7 @@ const generateQuestions = (count: number = 5): WordQuestion[] => {
 };
 
 export const WordArrangeGame = () => {
-  const { progress, addStars } = useGame();
+  const { progress, addStars, completeLevel } = useGame();
   const { 
     playCorrect, playWrong, playClick, playSelect, playLevelComplete,
     isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic, startBgMusic 
@@ -65,6 +65,7 @@ export const WordArrangeGame = () => {
   const [feedback, setFeedback] = useState<boolean | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
+  const [hasCompletedLevel, setHasCompletedLevel] = useState(false);
 
   const initGame = useCallback(() => {
     const newQuestions = generateQuestions(5);
@@ -73,6 +74,7 @@ export const WordArrangeGame = () => {
     setCorrectCount(0);
     setIsComplete(false);
     setFeedback(null);
+    setHasCompletedLevel(false);
     
     if (newQuestions.length > 0) {
       initQuestion(newQuestions[0]);
@@ -163,16 +165,20 @@ export const WordArrangeGame = () => {
     }
   }, [selectedLetters, questions, currentIndex, checkAnswer]);
 
-  const handleNextQuestion = () => {
+  const handleNextQuestion = useCallback(() => {
     setFeedback(null);
     
     if (currentIndex + 1 >= questions.length) {
       playLevelComplete();
       setIsComplete(true);
+      if (!hasCompletedLevel) {
+        completeLevel('reading');
+        setHasCompletedLevel(true);
+      }
     } else {
       setCurrentIndex(prev => prev + 1);
     }
-  };
+  }, [currentIndex, questions.length, playLevelComplete, hasCompletedLevel, completeLevel]);
 
   if (questions.length === 0) return null;
 
