@@ -257,6 +257,7 @@ export const WritingGame = () => {
           correctAnswers={correctCount}
           variant="writing"
           onReplay={initGame}
+          onContinue={initGame}
         />
       )}
     </div>

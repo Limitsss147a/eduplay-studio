@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { GameCard } from '@/components/game/GameCard';
 import { useGame } from '@/contexts/GameContext';
 import { useSound } from '@/hooks/useSound';
-import { Calculator, BookOpen, PenTool, Palette, Star, Volume2, VolumeX, Music, Music2, RotateCcw } from 'lucide-react';
+import { Calculator, BookOpen, PenTool, Palette, Star, Volume2, VolumeX, Music, Music2, RotateCcw, MessageSquare, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Index = () => {
@@ -84,47 +84,80 @@ const Index = () => {
           </div>
         </div>
 
-        {/* Game Cards Grid */}
-        <div className="grid grid-cols-1 gap-4">
-          <GameCard
-            title="Berhitung"
-            description="Belajar angka dan matematika dasar"
-            icon={<Calculator className="w-8 h-8 text-primary-foreground" />}
-            variant="counting"
-            stars={progress.counting.stars}
-            onClick={() => handleGameSelect('/game/counting')}
-          />
-          
-          <GameCard
-            title="Susun Kata"
-            description="Susun huruf menjadi kata yang benar"
-            icon={<BookOpen className="w-8 h-8 text-primary-foreground" />}
-            variant="reading"
-            stars={progress.reading.stars}
-            onClick={() => handleGameSelect('/game/reading')}
-          />
-          
-          <GameCard
-            title="Menulis"
-            description="Latihan menulis huruf dan angka"
-            icon={<PenTool className="w-8 h-8 text-primary-foreground" />}
-            variant="writing"
-            stars={progress.writing.stars}
-            onClick={() => handleGameSelect('/game/writing')}
-          />
-          
-          <GameCard
-            title="Menggambar"
-            description="Gambar sesuai petunjuk yang diberikan"
-            icon={<Palette className="w-8 h-8 text-primary-foreground" />}
-            variant="drawing"
-            stars={progress.drawing.stars}
-            onClick={() => handleGameSelect('/game/drawing')}
-          />
+        {/* Literacy Section - For kids learning to read */}
+        <div className="mb-6">
+          <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+            <Sparkles className="w-5 h-5 text-secondary" />
+            Belajar Membaca
+          </h3>
+          <div className="grid grid-cols-1 gap-4">
+            <GameCard
+              title="Jembatan Bunyi"
+              description="Belajar suku kata dasar"
+              icon={<MessageSquare className="w-8 h-8 text-primary-foreground" />}
+              variant="reading"
+              stars={0}
+              onClick={() => handleGameSelect('/game/syllable')}
+            />
+            
+            <GameCard
+              title="Susun Kata"
+              description="Susun suku kata menjadi kata"
+              icon={<BookOpen className="w-8 h-8 text-primary-foreground" />}
+              variant="reading"
+              stars={progress.reading.stars}
+              onClick={() => handleGameSelect('/game/reading')}
+            />
+            
+            <GameCard
+              title="Baca & Cocokkan"
+              description="Baca kata dan pilih gambar"
+              icon={<BookOpen className="w-8 h-8 text-primary-foreground" />}
+              variant="reading"
+              stars={progress.reading.stars}
+              onClick={() => handleGameSelect('/game/readmatch')}
+            />
+          </div>
+        </div>
+
+        {/* Other Games Section */}
+        <div className="mb-6">
+          <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+            <Star className="w-5 h-5 text-warning" />
+            Game Lainnya
+          </h3>
+          <div className="grid grid-cols-1 gap-4">
+            <GameCard
+              title="Berhitung"
+              description="Belajar angka dan matematika dasar"
+              icon={<Calculator className="w-8 h-8 text-primary-foreground" />}
+              variant="counting"
+              stars={progress.counting.stars}
+              onClick={() => handleGameSelect('/game/counting')}
+            />
+            
+            <GameCard
+              title="Menulis"
+              description="Latihan menulis huruf dan angka"
+              icon={<PenTool className="w-8 h-8 text-primary-foreground" />}
+              variant="writing"
+              stars={progress.writing.stars}
+              onClick={() => handleGameSelect('/game/writing')}
+            />
+            
+            <GameCard
+              title="Menggambar"
+              description="Gambar sesuai petunjuk yang diberikan"
+              icon={<Palette className="w-8 h-8 text-primary-foreground" />}
+              variant="drawing"
+              stars={progress.drawing.stars}
+              onClick={() => handleGameSelect('/game/drawing')}
+            />
+          </div>
         </div>
 
         {/* Stats Section */}
-        <div className="mt-6 bg-card rounded-3xl shadow-card p-6">
+        <div className="bg-card rounded-3xl shadow-card p-6">
           <h3 className="text-lg font-bold text-foreground mb-4">Progres Belajarmu 📊</h3>
           <div className="grid grid-cols-2 gap-3">
             <StatItem 
@@ -134,7 +167,7 @@ const Index = () => {
               icon="🔢"
             />
             <StatItem 
-              label="Susun Kata" 
+              label="Membaca" 
               value={progress.reading.completed} 
               color="bg-secondary" 
               icon="📝"
@@ -164,15 +197,15 @@ const Index = () => {
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary font-bold">2.</span>
-              Jawab soal atau ikuti petunjuk dengan benar
+              Ketuk tombol 🔊 untuk mendengar kata
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary font-bold">3.</span>
-              Dapatkan bintang untuk setiap jawaban benar
+              Jawab soal atau ikuti petunjuk dengan benar
             </li>
             <li className="flex items-start gap-2">
               <span className="text-primary font-bold">4.</span>
-              Selesaikan level untuk naik ke tingkat berikutnya
+              Dapatkan bintang untuk setiap jawaban benar
             </li>
           </ul>
         </div>

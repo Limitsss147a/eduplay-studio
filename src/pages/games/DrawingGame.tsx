@@ -289,6 +289,7 @@ export const DrawingGame = () => {
           correctAnswers={correctCount}
           variant="drawing"
           onReplay={initGame}
+          onContinue={initGame}
         />
       )}
     </div>

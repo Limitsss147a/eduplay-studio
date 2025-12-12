@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Home, RotateCcw } from 'lucide-react';
+import { Star, Home, RotateCcw, Play } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 
@@ -9,6 +9,7 @@ interface LevelCompleteProps {
   correctAnswers: number;
   variant?: 'counting' | 'reading' | 'writing' | 'drawing' | 'default';
   onReplay: () => void;
+  onContinue?: () => void;
 }
 
 const variantStyles = {
@@ -24,7 +25,8 @@ export const LevelComplete = ({
   totalQuestions, 
   correctAnswers, 
   variant = 'default',
-  onReplay 
+  onReplay,
+  onContinue
 }: LevelCompleteProps) => {
   const navigate = useNavigate();
   const maxStars = 3;
@@ -64,24 +66,38 @@ export const LevelComplete = ({
               : 'Jangan menyerah! Coba lagi! 🤗'}
         </p>
         
-        <div className="flex gap-3">
-          <button
-            onClick={() => navigate('/')}
-            className="flex-1 flex items-center justify-center gap-2 py-4 px-6 bg-muted text-foreground font-bold rounded-2xl hover:bg-muted/80 transition-colors active:scale-95"
-          >
-            <Home className="w-5 h-5" />
-            <span>Beranda</span>
-          </button>
-          <button
-            onClick={onReplay}
-            className={cn(
-              'flex-1 flex items-center justify-center gap-2 py-4 px-6 bg-gradient-to-r text-primary-foreground font-bold rounded-2xl hover:opacity-90 transition-all active:scale-95',
-              variantStyles[variant]
-            )}
-          >
-            <RotateCcw className="w-5 h-5" />
-            <span>Main Lagi</span>
-          </button>
+        <div className="flex flex-col gap-3">
+          {/* Primary Actions */}
+          <div className="flex gap-3">
+            <button
+              onClick={() => navigate('/')}
+              className="flex-1 flex items-center justify-center gap-2 py-4 px-6 bg-muted text-foreground font-bold rounded-2xl hover:bg-muted/80 transition-colors active:scale-95"
+            >
+              <Home className="w-5 h-5" />
+              <span>Beranda</span>
+            </button>
+            <button
+              onClick={onReplay}
+              className={cn(
+                'flex-1 flex items-center justify-center gap-2 py-4 px-6 bg-gradient-to-r text-primary-foreground font-bold rounded-2xl hover:opacity-90 transition-all active:scale-95',
+                variantStyles[variant]
+              )}
+            >
+              <RotateCcw className="w-5 h-5" />
+              <span>Main Lagi</span>
+            </button>
+          </div>
+          
+          {/* Continue Button */}
+          {onContinue && (
+            <button
+              onClick={onContinue}
+              className="w-full flex items-center justify-center gap-2 py-4 px-6 bg-success text-success-foreground font-bold rounded-2xl hover:bg-success/90 transition-colors active:scale-95"
+            >
+              <Play className="w-5 h-5" />
+              <span>Lanjutkan</span>
+            </button>
+          )}
         </div>
       </div>
     </div>

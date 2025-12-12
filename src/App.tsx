@@ -9,6 +9,8 @@ import CountingGame from "./pages/games/CountingGame";
 import WordArrangeGame from "./pages/games/WordArrangeGame";
 import WritingGame from "./pages/games/WritingGame";
 import DrawingGame from "./pages/games/DrawingGame";
+import SyllableGame from "./pages/games/SyllableGame";
+import ReadMatchGame from "./pages/games/ReadMatchGame";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -26,6 +28,8 @@ const App = () => (
             <Route path="/game/reading" element={<WordArrangeGame />} />
             <Route path="/game/writing" element={<WritingGame />} />
             <Route path="/game/drawing" element={<DrawingGame />} />
+            <Route path="/game/syllable" element={<SyllableGame />} />
+            <Route path="/game/readmatch" element={<ReadMatchGame />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
