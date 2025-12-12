@@ -18,7 +18,7 @@ interface WordData {
 const wordBank: WordData[] = [
   { word: 'BUKU', image: '📚', syllables: ['BU', 'KU'] },
   { word: 'KUDA', image: '🐴', syllables: ['KU', 'DA'] },
-  { word: 'MEJA', image: '🪑', syllables: ['ME', 'JA'] },
+  { word: 'MEJA', image: '🪵', syllables: ['ME', 'JA'] },
   { word: 'BOLA', image: '⚽', syllables: ['BO', 'LA'] },
   { word: 'SAPI', image: '🐄', syllables: ['SA', 'PI'] },
   { word: 'TOPI', image: '🎩', syllables: ['TO', 'PI'] },
