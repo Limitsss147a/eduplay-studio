@@ -5,13 +5,15 @@ import { AnswerFeedback } from '@/components/game/AnswerFeedback';
 import { LevelComplete } from '@/components/game/LevelComplete';
 import { useGame } from '@/contexts/GameContext';
 import { useSound } from '@/hooks/useSound';
+import { useSpeech } from '@/hooks/useSpeech';
 import { cn } from '@/lib/utils';
-import { RotateCcw } from 'lucide-react';
+import { RotateCcw, Volume2 } from 'lucide-react';
 
 interface WordData {
   word: string;
   image: string;
   hint: string;
+  syllables: string[];
 }
 
 interface WordQuestion extends WordData {
@@ -19,18 +21,21 @@ interface WordQuestion extends WordData {
 }
 
 const wordBank: WordData[] = [
-  { word: 'APEL', image: '🍎', hint: 'Buah merah yang segar' },
-  { word: 'BUKU', image: '📚', hint: 'Untuk membaca' },
-  { word: 'KUCING', image: '🐱', hint: 'Hewan berbulu lembut' },
-  { word: 'RUMAH', image: '🏠', hint: 'Tempat tinggal' },
-  { word: 'BUNGA', image: '🌸', hint: 'Tumbuhan yang indah' },
-  { word: 'PISANG', image: '🍌', hint: 'Buah kuning' },
-  { word: 'AYAM', image: '🐔', hint: 'Hewan berkokok' },
-  { word: 'IKAN', image: '🐟', hint: 'Hewan di air' },
-  { word: 'BOLA', image: '⚽', hint: 'Untuk bermain' },
-  { word: 'KUDA', image: '🐴', hint: 'Hewan berkaki empat' },
-  { word: 'SAPI', image: '🐄', hint: 'Hewan penghasil susu' },
-  { word: 'PANDA', image: '🐼', hint: 'Hewan hitam putih' },
+  { word: 'APEL', image: '🍎', hint: 'Buah merah yang segar', syllables: ['A', 'PEL'] },
+  { word: 'BUKU', image: '📚', hint: 'Untuk membaca', syllables: ['BU', 'KU'] },
+  { word: 'KUCING', image: '🐱', hint: 'Hewan berbulu lembut', syllables: ['KU', 'CING'] },
+  { word: 'RUMAH', image: '🏠', hint: 'Tempat tinggal', syllables: ['RU', 'MAH'] },
+  { word: 'BUNGA', image: '🌸', hint: 'Tumbuhan yang indah', syllables: ['BU', 'NGA'] },
+  { word: 'PISANG', image: '🍌', hint: 'Buah kuning', syllables: ['PI', 'SANG'] },
+  { word: 'AYAM', image: '🐔', hint: 'Hewan berkokok', syllables: ['A', 'YAM'] },
+  { word: 'IKAN', image: '🐟', hint: 'Hewan di air', syllables: ['I', 'KAN'] },
+  { word: 'BOLA', image: '⚽', hint: 'Untuk bermain', syllables: ['BO', 'LA'] },
+  { word: 'KUDA', image: '🐴', hint: 'Hewan berkaki empat', syllables: ['KU', 'DA'] },
+  { word: 'SAPI', image: '🐄', hint: 'Hewan penghasil susu', syllables: ['SA', 'PI'] },
+  { word: 'PANDA', image: '🐼', hint: 'Hewan hitam putih', syllables: ['PAN', 'DA'] },
+  { word: 'MEJA', image: '🪑', hint: 'Tempat menulis', syllables: ['ME', 'JA'] },
+  { word: 'NASI', image: '🍚', hint: 'Makanan pokok', syllables: ['NA', 'SI'] },
+  { word: 'TOPI', image: '🎩', hint: 'Pelindung kepala', syllables: ['TO', 'PI'] },
 ];
 
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -56,11 +61,12 @@ export const WordArrangeGame = () => {
     playCorrect, playWrong, playClick, playSelect, playLevelComplete,
     isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic, startBgMusic 
   } = useSound();
+  const { speak, speakSyllables } = useSpeech();
   
   const [questions, setQuestions] = useState<WordQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [shuffledLetters, setShuffledLetters] = useState<string[]>([]);
-  const [selectedLetters, setSelectedLetters] = useState<string[]>([]);
+  const [shuffledSyllables, setShuffledSyllables] = useState<string[]>([]);
+  const [selectedSyllables, setSelectedSyllables] = useState<string[]>([]);
   const [availableIndices, setAvailableIndices] = useState<number[]>([]);
   const [feedback, setFeedback] = useState<boolean | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
@@ -82,16 +88,16 @@ export const WordArrangeGame = () => {
   }, []);
 
   const initQuestion = (question: WordQuestion) => {
-    const letters = question.word.split('');
-    const shuffled = shuffleArray(letters);
-    setShuffledLetters(shuffled);
-    setSelectedLetters([]);
+    // Use syllables instead of individual letters
+    const syllables = question.syllables;
+    const shuffled = shuffleArray(syllables);
+    setShuffledSyllables(shuffled);
+    setSelectedSyllables([]);
     setAvailableIndices(shuffled.map((_, i) => i));
   };
 
   useEffect(() => {
     initGame();
-    // Auto-start background music when game loads
     if (!isBgMusicPlaying && !isMuted) {
       startBgMusic();
     }
@@ -103,37 +109,36 @@ export const WordArrangeGame = () => {
     }
   }, [currentIndex, questions]);
 
-  const handleLetterSelect = (index: number) => {
+  const handleSpeakWord = () => {
+    playClick();
+    const current = questions[currentIndex];
+    speakSyllables(current.word, current.syllables);
+  };
+
+  const handleSyllableSelect = (index: number) => {
     if (feedback !== null) return;
     
     playSelect();
-    const letter = shuffledLetters[index];
-    setSelectedLetters(prev => [...prev, letter]);
+    const syllable = shuffledSyllables[index];
+    setSelectedSyllables(prev => [...prev, syllable]);
     setAvailableIndices(prev => prev.filter(i => i !== index));
   };
 
-  const handleLetterRemove = (selectedIndex: number) => {
+  const handleSyllableRemove = (selectedIndex: number) => {
     if (feedback !== null) return;
     
     playClick();
-    const letter = selectedLetters[selectedIndex];
+    const syllable = selectedSyllables[selectedIndex];
     
-    // Find the original index in shuffledLetters
-    const originalIndex = shuffledLetters.findIndex((l, i) => 
-      l === letter && !availableIndices.includes(i) && 
-      !selectedLetters.slice(0, selectedIndex).filter(sl => sl === letter).length
-    );
-    
-    // Simple approach: find first matching unavailable index
-    const matchingIndices = shuffledLetters
-      .map((l, i) => ({ letter: l, index: i }))
-      .filter(item => item.letter === letter && !availableIndices.includes(item.index));
+    const matchingIndices = shuffledSyllables
+      .map((s, i) => ({ syllable: s, index: i }))
+      .filter(item => item.syllable === syllable && !availableIndices.includes(item.index));
     
     if (matchingIndices.length > 0) {
       setAvailableIndices(prev => [...prev, matchingIndices[0].index].sort((a, b) => a - b));
     }
     
-    setSelectedLetters(prev => prev.filter((_, i) => i !== selectedIndex));
+    setSelectedSyllables(prev => prev.filter((_, i) => i !== selectedIndex));
   };
 
   const handleReset = () => {
@@ -146,8 +151,9 @@ export const WordArrangeGame = () => {
   addStarsRef.current = addStars;
 
   const checkAnswer = useCallback(() => {
-    const answer = selectedLetters.join('');
-    const isCorrect = answer === questions[currentIndex].word;
+    const answer = selectedSyllables.join('');
+    const correctAnswer = questions[currentIndex].syllables.join('');
+    const isCorrect = answer === correctAnswer;
     
     if (isCorrect) {
       playCorrect();
@@ -158,15 +164,14 @@ export const WordArrangeGame = () => {
     }
     
     setFeedback(isCorrect);
-  }, [selectedLetters, questions, currentIndex, playCorrect, playWrong]);
+  }, [selectedSyllables, questions, currentIndex, playCorrect, playWrong]);
 
   useEffect(() => {
-    if (questions.length > 0 && selectedLetters.length === questions[currentIndex]?.word.length) {
-      // Small delay before checking
+    if (questions.length > 0 && selectedSyllables.length === questions[currentIndex]?.syllables.length) {
       const timer = setTimeout(checkAnswer, 300);
       return () => clearTimeout(timer);
     }
-  }, [selectedLetters, questions, currentIndex, checkAnswer]);
+  }, [selectedSyllables, questions, currentIndex, checkAnswer]);
 
   const handleNextQuestion = useCallback(() => {
     setFeedback(null);
@@ -208,23 +213,32 @@ export const WordArrangeGame = () => {
       
       <main className="flex-1 flex flex-col items-center justify-center p-4 gap-4">
         {/* Image Display */}
-        <div className="bg-card rounded-3xl shadow-card p-6 w-full max-w-sm text-center">
+        <div className="bg-card rounded-3xl shadow-card p-6 w-full max-w-sm text-center relative">
+          {/* Audio Button */}
+          <button
+            onClick={handleSpeakWord}
+            className="absolute top-4 right-4 p-3 bg-primary/20 rounded-full hover:bg-primary/30 transition-colors active:scale-95"
+          >
+            <Volume2 className="w-6 h-6 text-primary" />
+          </button>
+          
           <span className="text-8xl animate-float block mb-2">{currentQuestion.image}</span>
           <p className="text-muted-foreground text-sm">{currentQuestion.hint}</p>
+          <p className="text-xs text-muted-foreground mt-1">Ketuk 🔊 untuk mendengar</p>
         </div>
         
         {/* Answer Area */}
-        <div className="bg-card rounded-2xl shadow-card p-4 w-full max-w-sm min-h-[60px] flex items-center justify-center gap-2 flex-wrap">
-          {selectedLetters.length === 0 ? (
-            <span className="text-muted-foreground">Ketuk huruf untuk menyusun kata</span>
+        <div className="bg-card rounded-2xl shadow-card p-4 w-full max-w-sm min-h-[70px] flex items-center justify-center gap-2 flex-wrap">
+          {selectedSyllables.length === 0 ? (
+            <span className="text-muted-foreground">Ketuk suku kata untuk menyusun</span>
           ) : (
-            selectedLetters.map((letter, index) => (
+            selectedSyllables.map((syllable, index) => (
               <button
                 key={index}
-                onClick={() => handleLetterRemove(index)}
+                onClick={() => handleSyllableRemove(index)}
                 disabled={feedback !== null}
                 className={cn(
-                  'w-12 h-12 text-xl font-bold rounded-xl transition-all duration-200',
+                  'px-4 py-3 text-xl font-bold rounded-xl transition-all duration-200',
                   'shadow-md hover:scale-105 active:scale-95',
                   feedback === true
                     ? 'bg-success text-success-foreground animate-bounce'
@@ -233,28 +247,28 @@ export const WordArrangeGame = () => {
                     : 'bg-secondary text-secondary-foreground'
                 )}
               >
-                {letter}
+                {syllable}
               </button>
             ))
           )}
         </div>
         
-        {/* Letter Options */}
-        <div className="flex flex-wrap justify-center gap-2 w-full max-w-sm">
-          {shuffledLetters.map((letter, index) => (
+        {/* Syllable Options */}
+        <div className="flex flex-wrap justify-center gap-3 w-full max-w-sm">
+          {shuffledSyllables.map((syllable, index) => (
             <button
               key={index}
-              onClick={() => handleLetterSelect(index)}
+              onClick={() => handleSyllableSelect(index)}
               disabled={!availableIndices.includes(index) || feedback !== null}
               className={cn(
-                'w-14 h-14 text-2xl font-bold rounded-2xl transition-all duration-200',
+                'px-6 py-4 text-2xl font-bold rounded-2xl transition-all duration-200',
                 'shadow-card hover:shadow-lg',
                 availableIndices.includes(index)
                   ? 'bg-primary text-primary-foreground hover:scale-110 active:scale-95'
                   : 'bg-muted text-muted-foreground opacity-30 cursor-not-allowed'
               )}
             >
-              {letter}
+              {syllable}
             </button>
           ))}
         </div>
@@ -262,11 +276,11 @@ export const WordArrangeGame = () => {
         {/* Reset Button */}
         <button
           onClick={handleReset}
-          disabled={feedback !== null || selectedLetters.length === 0}
+          disabled={feedback !== null || selectedSyllables.length === 0}
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-full transition-all',
             'text-muted-foreground hover:text-foreground hover:bg-muted',
-            (feedback !== null || selectedLetters.length === 0) && 'opacity-50 cursor-not-allowed'
+            (feedback !== null || selectedSyllables.length === 0) && 'opacity-50 cursor-not-allowed'
           )}
         >
           <RotateCcw className="w-5 h-5" />
@@ -286,6 +300,7 @@ export const WordArrangeGame = () => {
           correctAnswers={correctCount}
           variant="reading"
           onReplay={initGame}
+          onContinue={initGame}
         />
       )}
     </div>
