@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { GameCard } from '@/components/game/GameCard';
 import { useGame } from '@/contexts/GameContext';
 import { useSound } from '@/hooks/useSound';
-import { Calculator, BookOpen, PenTool, Palette, Star, Volume2, VolumeX, Music, Music2, RotateCcw, MessageSquare, Sparkles } from 'lucide-react';
+import { Calculator, BookOpen, Star, Volume2, VolumeX, Music, Music2, RotateCcw, Sparkles, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const Index = () => {
@@ -92,15 +92,6 @@ const Index = () => {
           </h3>
           <div className="grid grid-cols-1 gap-4">
             <GameCard
-              title="Jembatan Bunyi"
-              description="Belajar suku kata dasar"
-              icon={<MessageSquare className="w-8 h-8 text-primary-foreground" />}
-              variant="reading"
-              stars={0}
-              onClick={() => handleGameSelect('/game/syllable')}
-            />
-            
-            <GameCard
               title="Susun Kata"
               description="Susun suku kata menjadi kata"
               icon={<BookOpen className="w-8 h-8 text-primary-foreground" />}
@@ -116,6 +107,15 @@ const Index = () => {
               variant="reading"
               stars={progress.reading.stars}
               onClick={() => handleGameSelect('/game/readmatch')}
+            />
+            
+            <GameCard
+              title="Soal Cerita"
+              description="Baca cerita pendek dan jawab pertanyaan"
+              icon={<FileText className="w-8 h-8 text-primary-foreground" />}
+              variant="reading"
+              stars={progress.reading.stars}
+              onClick={() => handleGameSelect('/game/story')}
             />
           </div>
         </div>
@@ -135,24 +135,6 @@ const Index = () => {
               stars={progress.counting.stars}
               onClick={() => handleGameSelect('/game/counting')}
             />
-            
-            <GameCard
-              title="Menulis"
-              description="Latihan menulis huruf dan angka"
-              icon={<PenTool className="w-8 h-8 text-primary-foreground" />}
-              variant="writing"
-              stars={progress.writing.stars}
-              onClick={() => handleGameSelect('/game/writing')}
-            />
-            
-            <GameCard
-              title="Menggambar"
-              description="Gambar sesuai petunjuk yang diberikan"
-              icon={<Palette className="w-8 h-8 text-primary-foreground" />}
-              variant="drawing"
-              stars={progress.drawing.stars}
-              onClick={() => handleGameSelect('/game/drawing')}
-            />
           </div>
         </div>
 
@@ -170,19 +152,7 @@ const Index = () => {
               label="Membaca" 
               value={progress.reading.completed} 
               color="bg-secondary" 
-              icon="📝"
-            />
-            <StatItem 
-              label="Menulis" 
-              value={progress.writing.completed} 
-              color="bg-game-writing" 
-              icon="✍️"
-            />
-            <StatItem 
-              label="Menggambar" 
-              value={progress.drawing.completed} 
-              color="bg-accent" 
-              icon="🎨"
+              icon="📖"
             />
           </div>
         </div>
