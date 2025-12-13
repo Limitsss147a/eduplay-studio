@@ -23,8 +23,8 @@ const storyBank: StoryQuestion[] = [
   // Short stories
   {
     id: 1,
-    story: 'Ani pergi ke pasar. Ani membeli buah apel.',
-    question: 'Ani membeli apa?',
+    story: 'Rina pergi ke pasar. Rina membeli buah apel.',
+    question: 'Rina membeli apa?',
     options: [
       { text: 'Apel', image: '🍎' },
       { text: 'Pisang', image: '🍌' },
@@ -89,8 +89,8 @@ const storyBank: StoryQuestion[] = [
   },
   {
     id: 7,
-    story: 'Hari ini hujan deras. Ani membawa payung biru.',
-    question: 'Ani membawa apa?',
+    story: 'Hari ini hujan deras. Siti membawa payung biru.',
+    question: 'Siti membawa apa?',
     options: [
       { text: 'Tas', image: '🎒' },
       { text: 'Payung', image: '☂️' },

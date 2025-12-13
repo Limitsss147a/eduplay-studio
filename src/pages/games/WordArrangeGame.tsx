@@ -34,7 +34,7 @@ const wordBank: WordData[] = [
   { word: 'KUDA', image: '🐴', hint: 'Hewan berkaki empat', syllables: ['KU', 'DA'] },
   { word: 'SAPI', image: '🐄', hint: 'Hewan penghasil susu', syllables: ['SA', 'PI'] },
   { word: 'PANDA', image: '🐼', hint: 'Hewan hitam putih', syllables: ['PAN', 'DA'] },
-  { word: 'MEJA', image: '🪑', hint: 'Tempat menulis', syllables: ['ME', 'JA'] },
+  { word: 'KURSI', image: '🪑', hint: 'Tempat duduk', syllables: ['KUR', 'SI'] },
   { word: 'NASI', image: '🍚', hint: 'Makanan pokok', syllables: ['NA', 'SI'] },
   { word: 'TOPI', image: '🎩', hint: 'Pelindung kepala', syllables: ['TO', 'PI'] },
   // New words
