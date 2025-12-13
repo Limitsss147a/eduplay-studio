@@ -3,6 +3,7 @@ import { GameHeader } from '@/components/game/GameHeader';
 import { ProgressBar } from '@/components/game/ProgressBar';
 import { AnswerFeedback } from '@/components/game/AnswerFeedback';
 import { LevelComplete } from '@/components/game/LevelComplete';
+import { FloatingIcons } from '@/components/game/FloatingIcons';
 import { useGame } from '@/contexts/GameContext';
 import { useSound } from '@/hooks/useSound';
 import { useSpeech } from '@/hooks/useSpeech';
@@ -18,7 +19,7 @@ interface WordData {
 const wordBank: WordData[] = [
   { word: 'BUKU', image: '📚', syllables: ['BU', 'KU'] },
   { word: 'KUDA', image: '🐴', syllables: ['KU', 'DA'] },
-  { word: 'MEJA', image: '🪵', syllables: ['ME', 'JA'] },
+  { word: 'MEJA', image: '🪑', syllables: ['ME', 'JA'] },
   { word: 'BOLA', image: '⚽', syllables: ['BO', 'LA'] },
   { word: 'SAPI', image: '🐄', syllables: ['SA', 'PI'] },
   { word: 'TOPI', image: '🎩', syllables: ['TO', 'PI'] },
@@ -28,6 +29,25 @@ const wordBank: WordData[] = [
   { word: 'GIGI', image: '🦷', syllables: ['GI', 'GI'] },
   { word: 'PADI', image: '🌾', syllables: ['PA', 'DI'] },
   { word: 'NASI', image: '🍚', syllables: ['NA', 'SI'] },
+  // New words
+  { word: 'APEL', image: '🍎', syllables: ['A', 'PEL'] },
+  { word: 'PISANG', image: '🍌', syllables: ['PI', 'SANG'] },
+  { word: 'JERUK', image: '🍊', syllables: ['JE', 'RUK'] },
+  { word: 'KUCING', image: '🐱', syllables: ['KU', 'CING'] },
+  { word: 'ANJING', image: '🐶', syllables: ['AN', 'JING'] },
+  { word: 'BURUNG', image: '🐦', syllables: ['BU', 'RUNG'] },
+  { word: 'IKAN', image: '🐟', syllables: ['I', 'KAN'] },
+  { word: 'BUNGA', image: '🌸', syllables: ['BU', 'NGA'] },
+  { word: 'RUMAH', image: '🏠', syllables: ['RU', 'MAH'] },
+  { word: 'MOBIL', image: '🚗', syllables: ['MO', 'BIL'] },
+  { word: 'PESAWAT', image: '✈️', syllables: ['PE', 'SA', 'WAT'] },
+  { word: 'KAPAL', image: '🚢', syllables: ['KA', 'PAL'] },
+  { word: 'SEPEDA', image: '🚲', syllables: ['SE', 'PE', 'DA'] },
+  { word: 'PAYUNG', image: '☂️', syllables: ['PA', 'YUNG'] },
+  { word: 'LAMPU', image: '💡', syllables: ['LAM', 'PU'] },
+  { word: 'BINTANG', image: '⭐', syllables: ['BIN', 'TANG'] },
+  { word: 'BULAN', image: '🌙', syllables: ['BU', 'LAN'] },
+  { word: 'HUJAN', image: '🌧️', syllables: ['HU', 'JAN'] },
 ];
 
 const allImages = wordBank.map(w => ({ word: w.word, image: w.image }));
@@ -109,11 +129,13 @@ export const ReadMatchGame = () => {
   const addStarsRef = useRef(addStars);
   addStarsRef.current = addStars;
 
-  const handleSpeakWord = () => {
+  const handleSpeakWord = useCallback(() => {
     playClick();
-    const current = questions[currentIndex];
-    speakSyllables(current.word, current.syllables);
-  };
+    if (questions.length > 0 && currentIndex < questions.length) {
+      const current = questions[currentIndex];
+      speakSyllables(current.word, current.syllables);
+    }
+  }, [questions, currentIndex, playClick, speakSyllables]);
 
   const handleAnswer = (selectedImage: string) => {
     if (feedback !== null || selectedAnswer !== null) return;
@@ -155,7 +177,9 @@ export const ReadMatchGame = () => {
   const starsEarned = correctCount >= 4 ? 3 : correctCount >= 3 ? 2 : correctCount >= 1 ? 1 : 0;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen gradient-game-bg flex flex-col relative">
+      <FloatingIcons variant="reading" />
+      
       <GameHeader 
         title="Baca & Cocokkan"
         stars={progress.reading.stars}
@@ -172,9 +196,9 @@ export const ReadMatchGame = () => {
         variant="reading"
       />
       
-      <main className="flex-1 flex flex-col items-center justify-center p-4 gap-6">
+      <main className="flex-1 flex flex-col items-center justify-center p-4 gap-6 relative z-10">
         {/* Word Display */}
-        <div className="bg-card rounded-3xl shadow-card p-6 w-full max-w-sm text-center">
+        <div className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-card p-6 w-full max-w-sm text-center border-2 border-secondary/20">
           <p className="text-sm text-muted-foreground mb-2">Baca kata ini:</p>
           <div className="flex items-center justify-center gap-3">
             <span className="text-5xl font-bold text-foreground tracking-wider">
@@ -182,9 +206,9 @@ export const ReadMatchGame = () => {
             </span>
             <button
               onClick={handleSpeakWord}
-              className="p-3 bg-primary/20 rounded-full hover:bg-primary/30 transition-colors active:scale-95"
+              className="p-3 bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors active:scale-95 shadow-md"
             >
-              <Volume2 className="w-6 h-6 text-primary" />
+              <Volume2 className="w-6 h-6 text-secondary" />
             </button>
           </div>
           <p className="text-xs text-muted-foreground mt-2">
@@ -193,7 +217,7 @@ export const ReadMatchGame = () => {
         </div>
         
         {/* Instruction */}
-        <p className="text-lg font-medium text-muted-foreground">
+        <p className="text-lg font-medium text-muted-foreground bg-card/80 backdrop-blur-sm px-4 py-2 rounded-full">
           Pilih gambar yang cocok:
         </p>
         
@@ -205,15 +229,16 @@ export const ReadMatchGame = () => {
               onClick={() => handleAnswer(option.image)}
               disabled={selectedAnswer !== null}
               className={cn(
-                'aspect-square rounded-2xl bg-card shadow-card p-4 flex items-center justify-center',
+                'aspect-square rounded-2xl bg-card/95 backdrop-blur-sm shadow-card p-4 flex items-center justify-center',
                 'transition-all duration-200 hover:scale-105 active:scale-95',
+                'border-2',
                 selectedAnswer === option.image
                   ? option.image === currentQuestion.correctImage
-                    ? 'ring-4 ring-success bg-success/10'
-                    : 'ring-4 ring-destructive bg-destructive/10 animate-shake'
+                    ? 'ring-4 ring-success bg-success/10 border-success'
+                    : 'ring-4 ring-destructive bg-destructive/10 border-destructive animate-shake'
                   : selectedAnswer !== null && option.image === currentQuestion.correctImage
-                    ? 'ring-4 ring-success bg-success/10'
-                    : 'hover:shadow-lg'
+                    ? 'ring-4 ring-success bg-success/10 border-success'
+                    : 'border-primary/20 hover:shadow-lg hover:border-primary/40'
               )}
             >
               <span className="text-6xl">{option.image}</span>

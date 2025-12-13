@@ -3,6 +3,7 @@ import { GameHeader } from '@/components/game/GameHeader';
 import { ProgressBar } from '@/components/game/ProgressBar';
 import { AnswerFeedback } from '@/components/game/AnswerFeedback';
 import { LevelComplete } from '@/components/game/LevelComplete';
+import { FloatingIcons } from '@/components/game/FloatingIcons';
 import { useGame } from '@/contexts/GameContext';
 import { useSound } from '@/hooks/useSound';
 import { useSpeech } from '@/hooks/useSpeech';
@@ -11,6 +12,7 @@ import { Volume2 } from 'lucide-react';
 
 interface StoryQuestion {
   id: number;
+  title?: string;
   story: string;
   question: string;
   options: { text: string; image: string }[];
@@ -18,6 +20,7 @@ interface StoryQuestion {
 }
 
 const storyBank: StoryQuestion[] = [
+  // Short stories
   {
     id: 1,
     story: 'Ani pergi ke pasar. Ani membeli buah apel.',
@@ -128,6 +131,183 @@ const storyBank: StoryQuestion[] = [
     ],
     correctIndex: 1,
   },
+  // New short stories
+  {
+    id: 11,
+    story: 'Rudi mempunyai anjing. Anjing Rudi suka bermain bola.',
+    question: 'Anjing Rudi suka bermain apa?',
+    options: [
+      { text: 'Bola', image: '⚽' },
+      { text: 'Boneka', image: '🧸' },
+      { text: 'Tali', image: '🪢' },
+    ],
+    correctIndex: 0,
+  },
+  {
+    id: 12,
+    story: 'Ibu membeli sayuran di pasar. Ibu membeli wortel dan tomat.',
+    question: 'Ibu membeli sayuran di mana?',
+    options: [
+      { text: 'Toko', image: '🏪' },
+      { text: 'Pasar', image: '🏬' },
+      { text: 'Rumah', image: '🏠' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 13,
+    story: 'Doni suka membaca buku cerita. Doni membaca setiap malam.',
+    question: 'Doni suka membaca apa?',
+    options: [
+      { text: 'Koran', image: '📰' },
+      { text: 'Komik', image: '📕' },
+      { text: 'Buku cerita', image: '📚' },
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 14,
+    story: 'Kakek punya kebun buah. Di kebun ada pohon mangga.',
+    question: 'Pohon apa yang ada di kebun kakek?',
+    options: [
+      { text: 'Mangga', image: '🥭' },
+      { text: 'Apel', image: '🍎' },
+      { text: 'Jeruk', image: '🍊' },
+    ],
+    correctIndex: 0,
+  },
+  {
+    id: 15,
+    story: 'Lisa menggambar bunga. Bunga yang Lisa gambar berwarna merah.',
+    question: 'Apa warna bunga yang Lisa gambar?',
+    options: [
+      { text: 'Kuning', image: '🌻' },
+      { text: 'Merah', image: '🌹' },
+      { text: 'Biru', image: '🔵' },
+    ],
+    correctIndex: 1,
+  },
+  // Longer stories (like the beetroot example)
+  {
+    id: 16,
+    title: 'Kucing Malas',
+    story: 'Kucing adalah hewan berbulu lembut yang suka tidur. Kucing bisa tidur sampai 16 jam sehari. Kucing suka makan ikan dan daging. Kucing juga suka bermain dengan bola benang. Kucing adalah hewan peliharaan yang lucu dan menggemaskan.',
+    question: 'Berapa jam kucing bisa tidur dalam sehari?',
+    options: [
+      { text: '10 jam', image: '🔟' },
+      { text: '16 jam', image: '🕐' },
+      { text: '5 jam', image: '5️⃣' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 17,
+    title: 'Buah Pisang',
+    story: 'Pisang adalah buah yang berwarna kuning. Pisang memiliki rasa manis dan lembut. Pisang baik untuk kesehatan karena mengandung banyak vitamin. Kita bisa makan pisang langsung atau dibuat jus. Pisang juga bisa dibuat menjadi keripik pisang yang renyah.',
+    question: 'Apa warna buah pisang?',
+    options: [
+      { text: 'Merah', image: '🔴' },
+      { text: 'Hijau', image: '🟢' },
+      { text: 'Kuning', image: '🟡' },
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 18,
+    title: 'Gajah Besar',
+    story: 'Gajah adalah hewan darat terbesar di dunia. Gajah memiliki belalai yang panjang. Belalai gajah digunakan untuk mengambil makanan dan minum air. Gajah suka makan rumput, daun, dan buah-buahan. Gajah hidup berkelompok bersama keluarganya.',
+    question: 'Untuk apa gajah menggunakan belalainya?',
+    options: [
+      { text: 'Untuk terbang', image: '✈️' },
+      { text: 'Untuk mengambil makanan', image: '🍃' },
+      { text: 'Untuk berenang', image: '🏊' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 19,
+    title: 'Lebah Rajin',
+    story: 'Lebah adalah serangga kecil yang sangat rajin. Lebah hidup di sarang bersama ribuan lebah lain. Lebah membuat madu dari nektar bunga. Madu sangat manis dan baik untuk kesehatan. Lebah terbang dari bunga ke bunga untuk mengumpulkan nektar.',
+    question: 'Lebah membuat madu dari apa?',
+    options: [
+      { text: 'Air', image: '💧' },
+      { text: 'Nektar bunga', image: '🌸' },
+      { text: 'Daun', image: '🍃' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 20,
+    title: 'Matahari',
+    story: 'Matahari adalah bintang yang sangat besar dan panas. Matahari memberikan cahaya dan panas untuk bumi. Tanpa matahari, bumi akan gelap dan dingin. Matahari terbit di timur dan terbenam di barat. Matahari sangat penting untuk kehidupan di bumi.',
+    question: 'Matahari terbit dari arah mana?',
+    options: [
+      { text: 'Barat', image: '⬅️' },
+      { text: 'Utara', image: '⬆️' },
+      { text: 'Timur', image: '➡️' },
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 21,
+    title: 'Buah Semangka',
+    story: 'Semangka adalah buah yang besar dan bulat. Kulit semangka berwarna hijau dengan garis-garis. Daging semangka berwarna merah dan rasanya manis. Semangka mengandung banyak air sehingga sangat segar. Semangka sangat nikmat dimakan saat cuaca panas.',
+    question: 'Apa warna daging buah semangka?',
+    options: [
+      { text: 'Hijau', image: '🟢' },
+      { text: 'Merah', image: '🔴' },
+      { text: 'Kuning', image: '🟡' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 22,
+    title: 'Kelinci Lucu',
+    story: 'Kelinci adalah hewan yang lucu dan menggemaskan. Kelinci memiliki telinga yang panjang dan bulu yang lembut. Kelinci suka makan wortel dan sayuran hijau. Kelinci bisa melompat dengan cepat. Banyak orang memelihara kelinci sebagai hewan peliharaan.',
+    question: 'Makanan kesukaan kelinci adalah?',
+    options: [
+      { text: 'Wortel', image: '🥕' },
+      { text: 'Daging', image: '🍖' },
+      { text: 'Ikan', image: '🐟' },
+    ],
+    correctIndex: 0,
+  },
+  {
+    id: 23,
+    title: 'Hujan',
+    story: 'Hujan turun dari awan di langit. Air hujan berasal dari uap air laut yang naik ke atas. Hujan membuat tanaman tumbuh subur. Saat hujan, kita perlu membawa payung agar tidak basah. Hujan juga membuat udara menjadi segar dan sejuk.',
+    question: 'Air hujan berasal dari mana?',
+    options: [
+      { text: 'Sungai', image: '🏞️' },
+      { text: 'Uap air laut', image: '🌊' },
+      { text: 'Gunung', image: '⛰️' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 24,
+    title: 'Burung Merak',
+    story: 'Burung merak adalah burung yang sangat indah. Burung merak jantan memiliki ekor yang besar dan berwarna-warni. Ekor merak bisa mengembang seperti kipas. Burung merak suka makan biji-bijian dan serangga. Burung merak berasal dari Asia.',
+    question: 'Ekor burung merak bisa mengembang seperti apa?',
+    options: [
+      { text: 'Bola', image: '⚽' },
+      { text: 'Kipas', image: '🪭' },
+      { text: 'Kotak', image: '🔲' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 25,
+    title: 'Bintang di Langit',
+    story: 'Bintang adalah benda langit yang bersinar di malam hari. Ada banyak sekali bintang di langit. Bintang terlihat kecil karena jaraknya sangat jauh dari bumi. Pada malam yang cerah, kita bisa melihat banyak bintang berkelip-kelip. Orang zaman dulu menggunakan bintang untuk petunjuk arah.',
+    question: 'Kapan kita bisa melihat bintang?',
+    options: [
+      { text: 'Pagi hari', image: '🌅' },
+      { text: 'Siang hari', image: '☀️' },
+      { text: 'Malam hari', image: '🌙' },
+    ],
+    correctIndex: 2,
+  },
 ];
 
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -180,11 +360,13 @@ export const StoryGame = () => {
   const addStarsRef = useRef(addStars);
   addStarsRef.current = addStars;
 
-  const handleSpeakStory = () => {
+  const handleSpeakStory = useCallback(() => {
     playClick();
-    const current = questions[currentIndex];
-    speak(current.story + '. ' + current.question, 0.8);
-  };
+    if (questions.length > 0 && currentIndex < questions.length) {
+      const current = questions[currentIndex];
+      speak(current.story + '. ' + current.question, 0.8);
+    }
+  }, [questions, currentIndex, playClick, speak]);
 
   const handleAnswer = (index: number) => {
     if (feedback !== null || selectedAnswer !== null) return;
@@ -224,9 +406,12 @@ export const StoryGame = () => {
 
   const currentQuestion = questions[currentIndex];
   const starsEarned = correctCount >= 4 ? 3 : correctCount >= 3 ? 2 : correctCount >= 1 ? 1 : 0;
+  const isLongStory = currentQuestion.story.length > 100;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen gradient-game-bg flex flex-col relative">
+      <FloatingIcons variant="reading" />
+      
       <GameHeader 
         title="Soal Cerita"
         stars={progress.reading.stars}
@@ -243,24 +428,34 @@ export const StoryGame = () => {
         variant="reading"
       />
       
-      <main className="flex-1 flex flex-col items-center justify-center p-4 gap-4">
+      <main className="flex-1 flex flex-col items-center justify-start p-4 gap-4 relative z-10 overflow-y-auto">
         {/* Story Card */}
-        <div className="bg-card rounded-3xl shadow-card p-6 w-full max-w-sm">
+        <div className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-card p-5 w-full max-w-sm border-2 border-secondary/20">
           <div className="flex items-start justify-between mb-3">
-            <p className="text-sm text-muted-foreground">Baca cerita ini:</p>
+            <div>
+              {currentQuestion.title && (
+                <h3 className="text-lg font-bold text-primary mb-1">{currentQuestion.title}</h3>
+              )}
+              <p className="text-sm text-muted-foreground">
+                {isLongStory ? 'Baca cerita ini dengan teliti:' : 'Baca cerita ini:'}
+              </p>
+            </div>
             <button
               onClick={handleSpeakStory}
-              className="p-3 bg-primary/20 rounded-full hover:bg-primary/30 transition-colors active:scale-95"
+              className="p-3 bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors active:scale-95 shadow-md"
             >
-              <Volume2 className="w-5 h-5 text-primary" />
+              <Volume2 className="w-5 h-5 text-secondary" />
             </button>
           </div>
           
-          <p className="text-xl font-medium text-foreground leading-relaxed mb-4">
+          <p className={cn(
+            "font-medium text-foreground leading-relaxed mb-4",
+            isLongStory ? "text-base" : "text-xl"
+          )}>
             {currentQuestion.story}
           </p>
           
-          <div className="border-t border-border pt-4">
+          <div className="border-t-2 border-dashed border-border pt-4">
             <p className="text-lg font-bold text-primary">
               {currentQuestion.question}
             </p>
@@ -268,22 +463,23 @@ export const StoryGame = () => {
         </div>
         
         {/* Answer Options */}
-        <div className="w-full max-w-sm space-y-3">
+        <div className="w-full max-w-sm space-y-3 pb-4">
           {currentQuestion.options.map((option, i) => (
             <button
               key={i}
               onClick={() => handleAnswer(i)}
               disabled={selectedAnswer !== null}
               className={cn(
-                'w-full flex items-center gap-4 p-4 rounded-2xl bg-card shadow-card',
+                'w-full flex items-center gap-4 p-4 rounded-2xl bg-card/95 backdrop-blur-sm shadow-card',
                 'transition-all duration-200 hover:scale-[1.02] active:scale-95',
+                'border-2',
                 selectedAnswer === i
                   ? i === currentQuestion.correctIndex
-                    ? 'ring-4 ring-success bg-success/10'
-                    : 'ring-4 ring-destructive bg-destructive/10 animate-shake'
+                    ? 'ring-4 ring-success bg-success/10 border-success'
+                    : 'ring-4 ring-destructive bg-destructive/10 border-destructive animate-shake'
                   : selectedAnswer !== null && i === currentQuestion.correctIndex
-                    ? 'ring-4 ring-success bg-success/10'
-                    : 'hover:shadow-lg'
+                    ? 'ring-4 ring-success bg-success/10 border-success'
+                    : 'border-primary/20 hover:shadow-lg hover:border-primary/40'
               )}
             >
               <span className="text-4xl">{option.image}</span>

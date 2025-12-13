@@ -3,6 +3,7 @@ import { GameHeader } from '@/components/game/GameHeader';
 import { ProgressBar } from '@/components/game/ProgressBar';
 import { AnswerFeedback } from '@/components/game/AnswerFeedback';
 import { LevelComplete } from '@/components/game/LevelComplete';
+import { FloatingIcons } from '@/components/game/FloatingIcons';
 import { useGame } from '@/contexts/GameContext';
 import { useSound } from '@/hooks/useSound';
 import { useSpeech } from '@/hooks/useSpeech';
@@ -36,6 +37,22 @@ const wordBank: WordData[] = [
   { word: 'MEJA', image: '🪑', hint: 'Tempat menulis', syllables: ['ME', 'JA'] },
   { word: 'NASI', image: '🍚', hint: 'Makanan pokok', syllables: ['NA', 'SI'] },
   { word: 'TOPI', image: '🎩', hint: 'Pelindung kepala', syllables: ['TO', 'PI'] },
+  // New words
+  { word: 'GAJAH', image: '🐘', hint: 'Hewan besar berbelalai', syllables: ['GA', 'JAH'] },
+  { word: 'HARIMAU', image: '🐯', hint: 'Hewan loreng', syllables: ['HA', 'RI', 'MAU'] },
+  { word: 'KELINCI', image: '🐰', hint: 'Hewan telinga panjang', syllables: ['KE', 'LIN', 'CI'] },
+  { word: 'BURUNG', image: '🐦', hint: 'Hewan bersayap', syllables: ['BU', 'RUNG'] },
+  { word: 'JERUK', image: '🍊', hint: 'Buah berwarna oranye', syllables: ['JE', 'RUK'] },
+  { word: 'ANGGUR', image: '🍇', hint: 'Buah kecil berkelompok', syllables: ['ANG', 'GUR'] },
+  { word: 'MANGGA', image: '🥭', hint: 'Buah manis kuning', syllables: ['MANG', 'GA'] },
+  { word: 'SEMUT', image: '🐜', hint: 'Hewan kecil rajin', syllables: ['SE', 'MUT'] },
+  { word: 'LEBAH', image: '🐝', hint: 'Hewan pembuat madu', syllables: ['LE', 'BAH'] },
+  { word: 'BEBEK', image: '🦆', hint: 'Hewan yang berenang', syllables: ['BE', 'BEK'] },
+  { word: 'SINGA', image: '🦁', hint: 'Raja hutan', syllables: ['SI', 'NGA'] },
+  { word: 'ZEBRA', image: '🦓', hint: 'Hewan belang hitam putih', syllables: ['ZE', 'BRA'] },
+  { word: 'WORTEL', image: '🥕', hint: 'Sayuran oranye', syllables: ['WOR', 'TEL'] },
+  { word: 'TOMAT', image: '🍅', hint: 'Buah merah untuk masak', syllables: ['TO', 'MAT'] },
+  { word: 'PAYUNG', image: '☂️', hint: 'Pelindung dari hujan', syllables: ['PA', 'YUNG'] },
 ];
 
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -88,7 +105,6 @@ export const WordArrangeGame = () => {
   }, []);
 
   const initQuestion = (question: WordQuestion) => {
-    // Use syllables instead of individual letters
     const syllables = question.syllables;
     const shuffled = shuffleArray(syllables);
     setShuffledSyllables(shuffled);
@@ -109,11 +125,13 @@ export const WordArrangeGame = () => {
     }
   }, [currentIndex, questions]);
 
-  const handleSpeakWord = () => {
+  const handleSpeakWord = useCallback(() => {
     playClick();
-    const current = questions[currentIndex];
-    speakSyllables(current.word, current.syllables);
-  };
+    if (questions.length > 0 && currentIndex < questions.length) {
+      const current = questions[currentIndex];
+      speakSyllables(current.word, current.syllables);
+    }
+  }, [questions, currentIndex, playClick, speakSyllables]);
 
   const handleSyllableSelect = (index: number) => {
     if (feedback !== null) return;
@@ -194,7 +212,9 @@ export const WordArrangeGame = () => {
   const starsEarned = correctCount >= 4 ? 3 : correctCount >= 3 ? 2 : correctCount >= 1 ? 1 : 0;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen gradient-game-bg flex flex-col relative">
+      <FloatingIcons variant="reading" />
+      
       <GameHeader 
         title="Susun Kata"
         stars={progress.reading.stars}
@@ -211,15 +231,15 @@ export const WordArrangeGame = () => {
         variant="reading"
       />
       
-      <main className="flex-1 flex flex-col items-center justify-center p-4 gap-4">
+      <main className="flex-1 flex flex-col items-center justify-center p-4 gap-4 relative z-10">
         {/* Image Display */}
-        <div className="bg-card rounded-3xl shadow-card p-6 w-full max-w-sm text-center relative">
+        <div className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-card p-6 w-full max-w-sm text-center relative border-2 border-secondary/20">
           {/* Audio Button */}
           <button
             onClick={handleSpeakWord}
-            className="absolute top-4 right-4 p-3 bg-primary/20 rounded-full hover:bg-primary/30 transition-colors active:scale-95"
+            className="absolute top-4 right-4 p-3 bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors active:scale-95 shadow-md"
           >
-            <Volume2 className="w-6 h-6 text-primary" />
+            <Volume2 className="w-6 h-6 text-secondary" />
           </button>
           
           <span className="text-8xl animate-float block mb-2">{currentQuestion.image}</span>
@@ -228,7 +248,7 @@ export const WordArrangeGame = () => {
         </div>
         
         {/* Answer Area */}
-        <div className="bg-card rounded-2xl shadow-card p-4 w-full max-w-sm min-h-[70px] flex items-center justify-center gap-2 flex-wrap">
+        <div className="bg-card/95 backdrop-blur-sm rounded-2xl shadow-card p-4 w-full max-w-sm min-h-[70px] flex items-center justify-center gap-2 flex-wrap border-2 border-primary/20">
           {selectedSyllables.length === 0 ? (
             <span className="text-muted-foreground">Ketuk suku kata untuk menyusun</span>
           ) : (

@@ -6,6 +6,8 @@ import { useSound } from '@/hooks/useSound';
 import { Calculator, BookOpen, Star, Volume2, VolumeX, Music, Music2, RotateCcw, Sparkles, FileText } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
+const floatingEmojis = ['⭐', '🌟', '✨', '📚', '✏️', '🎨', '🌈', '🎯', '💡', '🎮', '🚀', '🎈'];
+
 const Index = () => {
   const navigate = useNavigate();
   const { progress, totalStars, playerName, resetProgress } = useGame();
@@ -18,12 +20,30 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen gradient-hero">
+    <div className="min-h-screen gradient-game-bg relative overflow-hidden">
+      {/* Floating Background Icons */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        {floatingEmojis.map((emoji, index) => (
+          <span
+            key={index}
+            className="absolute text-3xl md:text-4xl opacity-15 animate-float-slow select-none"
+            style={{
+              left: `${(index * 8) + 2}%`,
+              top: `${(index * 7) + 5}%`,
+              animationDelay: `${index * 0.4}s`,
+              animationDuration: `${5 + (index % 4)}s`,
+            }}
+          >
+            {emoji}
+          </span>
+        ))}
+      </div>
+
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-card/80 backdrop-blur-md border-b border-border px-4 py-3 shadow-soft">
+      <header className="sticky top-0 z-50 bg-card/90 backdrop-blur-md border-b border-border px-4 py-3 shadow-soft">
         <div className="flex items-center justify-between max-w-lg mx-auto">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl gradient-primary flex items-center justify-center shadow-button">
+            <div className="w-12 h-12 rounded-2xl gradient-rainbow flex items-center justify-center shadow-button animate-pulse">
               <span className="text-2xl">🎮</span>
             </div>
             <div>
@@ -59,8 +79,8 @@ const Index = () => {
                 <Volume2 className="w-5 h-5 text-foreground" />
               )}
             </button>
-            <div className="flex items-center gap-1 bg-warning/20 px-4 py-2 rounded-full">
-              <Star className="w-5 h-5 fill-warning text-warning" />
+            <div className="flex items-center gap-1 bg-warning/20 px-4 py-2 rounded-full shadow-md">
+              <Star className="w-5 h-5 fill-warning text-warning animate-pulse" />
               <span className="font-bold text-foreground">{totalStars}</span>
             </div>
           </div>
@@ -68,15 +88,16 @@ const Index = () => {
       </header>
 
       {/* Main Content */}
-      <main className="px-4 py-6 max-w-lg mx-auto">
+      <main className="px-4 py-6 max-w-lg mx-auto relative z-10">
         {/* Welcome Banner */}
-        <div className="bg-card rounded-3xl shadow-card p-6 mb-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-primary/10 rounded-full" />
-          <div className="absolute bottom-0 left-0 w-24 h-24 -ml-6 -mb-6 bg-secondary/10 rounded-full" />
+        <div className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-card p-6 mb-6 relative overflow-hidden border-2 border-primary/20">
+          <div className="absolute top-0 right-0 w-32 h-32 -mr-8 -mt-8 bg-gradient-to-br from-primary/20 to-accent/20 rounded-full" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 -ml-6 -mb-6 bg-gradient-to-tr from-secondary/20 to-success/20 rounded-full" />
           
           <div className="relative z-10">
-            <h2 className="text-2xl font-bold text-foreground mb-2">
-              Ayo Belajar Sambil Bermain! 🚀
+            <h2 className="text-2xl font-bold text-foreground mb-2 flex items-center gap-2">
+              <span className="animate-bounce-soft">🚀</span>
+              Ayo Belajar Sambil Bermain!
             </h2>
             <p className="text-muted-foreground">
               Pilih permainan favoritmu dan kumpulkan bintang sebanyak-banyaknya!
@@ -87,7 +108,7 @@ const Index = () => {
         {/* Literacy Section - For kids learning to read */}
         <div className="mb-6">
           <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
-            <Sparkles className="w-5 h-5 text-secondary" />
+            <Sparkles className="w-5 h-5 text-secondary animate-sparkle" />
             Belajar Membaca
           </h3>
           <div className="grid grid-cols-1 gap-4">
@@ -123,7 +144,7 @@ const Index = () => {
         {/* Other Games Section */}
         <div className="mb-6">
           <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
-            <Star className="w-5 h-5 text-warning" />
+            <Star className="w-5 h-5 text-warning animate-pulse" />
             Game Lainnya
           </h3>
           <div className="grid grid-cols-1 gap-4">
@@ -139,8 +160,10 @@ const Index = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="bg-card rounded-3xl shadow-card p-6">
-          <h3 className="text-lg font-bold text-foreground mb-4">Progres Belajarmu 📊</h3>
+        <div className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-card p-6 border-2 border-success/20">
+          <h3 className="text-lg font-bold text-foreground mb-4 flex items-center gap-2">
+            📊 Progres Belajarmu
+          </h3>
           <div className="grid grid-cols-2 gap-3">
             <StatItem 
               label="Berhitung" 
@@ -158,8 +181,10 @@ const Index = () => {
         </div>
 
         {/* Guide Section */}
-        <div className="mt-6 bg-card rounded-3xl shadow-card p-6">
-          <h3 className="text-lg font-bold text-foreground mb-3">Panduan Bermain 📖</h3>
+        <div className="mt-6 bg-card/95 backdrop-blur-sm rounded-3xl shadow-card p-6 border-2 border-accent/20">
+          <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
+            📖 Panduan Bermain
+          </h3>
           <ul className="space-y-2 text-muted-foreground">
             <li className="flex items-start gap-2">
               <span className="text-primary font-bold">1.</span>
@@ -186,7 +211,7 @@ const Index = () => {
             playClick();
             setShowResetConfirm(true);
           }}
-          className="mt-6 w-full flex items-center justify-center gap-2 py-4 px-6 bg-destructive/10 text-destructive font-bold rounded-2xl hover:bg-destructive/20 transition-colors active:scale-95"
+          className="mt-6 w-full flex items-center justify-center gap-2 py-4 px-6 bg-destructive/10 text-destructive font-bold rounded-2xl hover:bg-destructive/20 transition-colors active:scale-95 border-2 border-destructive/20"
         >
           <RotateCcw className="w-5 h-5" />
           <span>Reset Progres</span>
@@ -196,7 +221,7 @@ const Index = () => {
       {/* Reset Confirmation Modal */}
       {showResetConfirm && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/30 backdrop-blur-md p-4">
-          <div className="bg-card rounded-3xl shadow-2xl p-6 max-w-sm w-full text-center animate-pop">
+          <div className="bg-card rounded-3xl shadow-2xl p-6 max-w-sm w-full text-center animate-pop border-2 border-destructive/20">
             <span className="text-5xl block mb-4">⚠️</span>
             <h2 className="text-xl font-bold text-foreground mb-2">Reset Progres?</h2>
             <p className="text-muted-foreground mb-6">
@@ -227,7 +252,7 @@ const Index = () => {
 };
 
 const StatItem = ({ label, value, color, icon }: { label: string; value: number; color: string; icon: string }) => (
-  <div className="bg-muted rounded-2xl p-4 text-center relative overflow-hidden">
+  <div className="bg-muted/80 backdrop-blur-sm rounded-2xl p-4 text-center relative overflow-hidden border border-border">
     <div className={cn('absolute top-0 left-0 w-full h-1', color)} />
     <span className="text-2xl block mb-1">{icon}</span>
     <p className="text-2xl font-bold text-foreground">{value}</p>
