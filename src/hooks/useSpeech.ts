@@ -1,36 +1,66 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useEffect } from 'react';
 
 export const useSpeech = () => {
   const isSpeakingRef = useRef(false);
+  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+
+  // Ensure voices are loaded
+  useEffect(() => {
+    const loadVoices = () => {
+      window.speechSynthesis.getVoices();
+    };
+    
+    loadVoices();
+    window.speechSynthesis.onvoiceschanged = loadVoices;
+    
+    return () => {
+      window.speechSynthesis.onvoiceschanged = null;
+    };
+  }, []);
 
   const speak = useCallback((text: string, rate: number = 0.8) => {
-    if (isSpeakingRef.current) {
-      window.speechSynthesis.cancel();
-    }
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+    
+    // Small delay to ensure cancel is processed
+    setTimeout(() => {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'id-ID';
+      utterance.rate = rate;
+      utterance.pitch = 1.1;
+      utterance.volume = 1;
+      
+      // Try to find Indonesian voice
+      const voices = window.speechSynthesis.getVoices();
+      const indonesianVoice = voices.find(voice => 
+        voice.lang.includes('id') || voice.lang.includes('ID')
+      );
+      if (indonesianVoice) {
+        utterance.voice = indonesianVoice;
+      }
+      
+      utterance.onstart = () => {
+        isSpeakingRef.current = true;
+      };
+      
+      utterance.onend = () => {
+        isSpeakingRef.current = false;
+      };
+      
+      utterance.onerror = (e) => {
+        console.log('Speech error:', e);
+        isSpeakingRef.current = false;
+      };
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'id-ID';
-    utterance.rate = rate;
-    utterance.pitch = 1.1;
-    
-    utterance.onstart = () => {
-      isSpeakingRef.current = true;
-    };
-    
-    utterance.onend = () => {
-      isSpeakingRef.current = false;
-    };
-    
-    utterance.onerror = () => {
-      isSpeakingRef.current = false;
-    };
-
-    window.speechSynthesis.speak(utterance);
+      utteranceRef.current = utterance;
+      window.speechSynthesis.speak(utterance);
+    }, 50);
   }, []);
 
   const speakSyllables = useCallback((word: string, syllables: string[]) => {
     // Speak each syllable with pause, then the full word
-    const fullText = syllables.join('... ') + '... ' + word;
+    const syllableText = syllables.join('... ');
+    const fullText = syllableText + '... ' + word;
     speak(fullText, 0.7);
   }, [speak]);
 

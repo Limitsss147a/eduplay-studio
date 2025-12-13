@@ -3,6 +3,7 @@ import { GameHeader } from '@/components/game/GameHeader';
 import { ProgressBar } from '@/components/game/ProgressBar';
 import { AnswerFeedback } from '@/components/game/AnswerFeedback';
 import { LevelComplete } from '@/components/game/LevelComplete';
+import { FloatingIcons } from '@/components/game/FloatingIcons';
 import { useGame } from '@/contexts/GameContext';
 import { useSound } from '@/hooks/useSound';
 import { cn } from '@/lib/utils';
@@ -18,13 +19,13 @@ interface Question {
 
 const generateQuestions = (level: number): Question[] => {
   const questions: Question[] = [];
-  const emojis = ['🍎', '🌟', '🎈', '🐱', '🌸', '🍕', '🚗', '🎁'];
+  const emojis = ['🍎', '🌟', '🎈', '🐱', '🌸', '🍕', '🚗', '🎁', '🍌', '🐶', '⚽', '🎂', '🍦', '🦋', '🌈'];
   
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 7; i++) {
     const emoji = emojis[Math.floor(Math.random() * emojis.length)];
     const maxNum = Math.min(5 + level * 2, 15);
     
-    if (i < 2) {
+    if (i < 3) {
       // Counting questions
       const count = Math.floor(Math.random() * maxNum) + 1;
       const visual = Array(count).fill(emoji);
@@ -36,7 +37,7 @@ const generateQuestions = (level: number): Question[] => {
         answer: count,
         options: generateOptions(count, maxNum),
       });
-    } else if (i < 4) {
+    } else if (i < 5) {
       // Addition
       const num1 = Math.floor(Math.random() * Math.min(5, maxNum / 2)) + 1;
       const num2 = Math.floor(Math.random() * Math.min(5, maxNum / 2)) + 1;
@@ -90,7 +91,7 @@ export const CountingGame = () => {
   const { progress, addStars, completeLevel } = useGame();
   const { 
     playCorrect, playWrong, playClick, playLevelComplete,
-    isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic 
+    isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic, startBgMusic 
   } = useSound();
   
   const [questions, setQuestions] = useState<Question[]>([]);
@@ -113,7 +114,10 @@ export const CountingGame = () => {
 
   useEffect(() => {
     initGame();
-  }, [initGame]);
+    if (!isBgMusicPlaying && !isMuted) {
+      startBgMusic();
+    }
+  }, []);
 
   const addStarsRef = useRef(addStars);
   addStarsRef.current = addStars;
@@ -155,10 +159,12 @@ export const CountingGame = () => {
   if (questions.length === 0) return null;
 
   const currentQuestion = questions[currentIndex];
-  const starsEarned = correctCount >= 4 ? 3 : correctCount >= 3 ? 2 : correctCount >= 1 ? 1 : 0;
+  const starsEarned = correctCount >= 6 ? 3 : correctCount >= 4 ? 2 : correctCount >= 1 ? 1 : 0;
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className="min-h-screen gradient-game-bg flex flex-col relative">
+      <FloatingIcons variant="counting" />
+      
       <GameHeader 
         title="Berhitung"
         stars={progress.counting.stars}
@@ -175,9 +181,9 @@ export const CountingGame = () => {
         variant="counting"
       />
       
-      <main className="flex-1 flex flex-col items-center justify-center p-4">
+      <main className="flex-1 flex flex-col items-center justify-center p-4 relative z-10">
         {/* Visual display */}
-        <div className="bg-card rounded-3xl shadow-card p-6 mb-6 w-full max-w-sm min-h-[180px] flex flex-wrap items-center justify-center gap-2">
+        <div className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-card p-6 mb-6 w-full max-w-sm min-h-[180px] flex flex-wrap items-center justify-center gap-2 border-2 border-primary/20">
           {currentQuestion.visual.map((item, i) => (
             <span 
               key={i} 
@@ -190,7 +196,7 @@ export const CountingGame = () => {
         </div>
         
         {/* Question */}
-        <h2 className="text-2xl font-bold text-foreground mb-6 text-center">
+        <h2 className="text-2xl font-bold text-foreground mb-6 text-center bg-card/80 backdrop-blur-sm px-6 py-3 rounded-2xl shadow-md">
           {currentQuestion.question}
         </h2>
         
@@ -211,7 +217,7 @@ export const CountingGame = () => {
                     : 'bg-destructive text-destructive-foreground animate-shake'
                   : selectedAnswer !== null && option === currentQuestion.answer
                     ? 'bg-success text-success-foreground'
-                    : 'bg-card text-foreground hover:bg-primary/10'
+                    : 'bg-card/95 backdrop-blur-sm text-foreground hover:bg-primary/10 border-2 border-primary/20'
               )}
             >
               {option}
