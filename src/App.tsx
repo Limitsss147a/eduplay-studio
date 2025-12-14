@@ -7,10 +7,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { GameProvider } from "@/contexts/GameContext";
 import SplashScreen from "@/components/SplashScreen";
 import Index from "./pages/Index";
-import CountingGame from "./pages/games/CountingGame";
 import WordArrangeGame from "./pages/games/WordArrangeGame";
 import ReadMatchGame from "./pages/games/ReadMatchGame";
 import StoryGame from "./pages/games/StoryGame";
+import SentenceArrangeGame from "./pages/games/SentenceArrangeGame";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -28,10 +28,10 @@ const App = () => {
           <BrowserRouter>
             <Routes>
               <Route path="/" element={<Index />} />
-              <Route path="/game/counting" element={<CountingGame />} />
               <Route path="/game/reading" element={<WordArrangeGame />} />
               <Route path="/game/readmatch" element={<ReadMatchGame />} />
               <Route path="/game/story" element={<StoryGame />} />
+              <Route path="/game/sentence" element={<SentenceArrangeGame />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>

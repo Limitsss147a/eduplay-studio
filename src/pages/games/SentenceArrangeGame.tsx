@@ -10,49 +10,43 @@ import { useSpeech } from '@/hooks/useSpeech';
 import { cn } from '@/lib/utils';
 import { RotateCcw, Volume2 } from 'lucide-react';
 
-interface WordData {
-  word: string;
+interface SentenceData {
+  sentence: string;
   image: string;
   hint: string;
-  syllables: string[];
+  words: string[];
 }
 
-interface WordQuestion extends WordData {
+interface SentenceQuestion extends SentenceData {
   id: number;
 }
 
-const wordBank: WordData[] = [
-  { word: 'APEL', image: '🍎', hint: 'Buah merah yang segar', syllables: ['A', 'PEL'] },
-  { word: 'BUKU', image: '📚', hint: 'Untuk membaca', syllables: ['BU', 'KU'] },
-  { word: 'KUCING', image: '🐱', hint: 'Hewan berbulu lembut', syllables: ['KU', 'CING'] },
-  { word: 'RUMAH', image: '🏠', hint: 'Tempat tinggal', syllables: ['RU', 'MAH'] },
-  { word: 'BUNGA', image: '🌸', hint: 'Tumbuhan yang indah', syllables: ['BU', 'NGA'] },
-  { word: 'PISANG', image: '🍌', hint: 'Buah kuning', syllables: ['PI', 'SANG'] },
-  { word: 'AYAM', image: '🐔', hint: 'Hewan berkokok', syllables: ['A', 'YAM'] },
-  { word: 'IKAN', image: '🐟', hint: 'Hewan di air', syllables: ['I', 'KAN'] },
-  { word: 'BOLA', image: '⚽', hint: 'Untuk bermain', syllables: ['BO', 'LA'] },
-  { word: 'KUDA', image: '🐴', hint: 'Hewan berkaki empat', syllables: ['KU', 'DA'] },
-  { word: 'SAPI', image: '🐄', hint: 'Hewan penghasil susu', syllables: ['SA', 'PI'] },
-  { word: 'PANDA', image: '🐼', hint: 'Hewan hitam putih', syllables: ['PAN', 'DA'] },
-  { word: 'KURSI', image: '🪑', hint: 'Tempat duduk', syllables: ['KUR', 'SI'] },
-  { word: 'NASI', image: '🍚', hint: 'Makanan pokok', syllables: ['NA', 'SI'] },
-  { word: 'TOPI', image: '🎩', hint: 'Pelindung kepala', syllables: ['TO', 'PI'] },
-  // New words
-  { word: 'GAJAH', image: '🐘', hint: 'Hewan besar berbelalai', syllables: ['GA', 'JAH'] },
-  { word: 'HARIMAU', image: '🐯', hint: 'Hewan loreng', syllables: ['HA', 'RI', 'MAU'] },
-  { word: 'KELINCI', image: '🐰', hint: 'Hewan telinga panjang', syllables: ['KE', 'LIN', 'CI'] },
-  { word: 'BURUNG', image: '🐦', hint: 'Hewan bersayap', syllables: ['BU', 'RUNG'] },
-  { word: 'JERUK', image: '🍊', hint: 'Buah berwarna oranye', syllables: ['JE', 'RUK'] },
-  { word: 'ANGGUR', image: '🍇', hint: 'Buah kecil berkelompok', syllables: ['ANG', 'GUR'] },
-  { word: 'MANGGA', image: '🥭', hint: 'Buah manis kuning', syllables: ['MANG', 'GA'] },
-  { word: 'SEMUT', image: '🐜', hint: 'Hewan kecil rajin', syllables: ['SE', 'MUT'] },
-  { word: 'LEBAH', image: '🐝', hint: 'Hewan pembuat madu', syllables: ['LE', 'BAH'] },
-  { word: 'BEBEK', image: '🦆', hint: 'Hewan yang berenang', syllables: ['BE', 'BEK'] },
-  { word: 'SINGA', image: '🦁', hint: 'Raja hutan', syllables: ['SI', 'NGA'] },
-  { word: 'ZEBRA', image: '🦓', hint: 'Hewan belang hitam putih', syllables: ['ZE', 'BRA'] },
-  { word: 'WORTEL', image: '🥕', hint: 'Sayuran oranye', syllables: ['WOR', 'TEL'] },
-  { word: 'TOMAT', image: '🍅', hint: 'Buah merah untuk masak', syllables: ['TO', 'MAT'] },
-  { word: 'PAYUNG', image: '☂️', hint: 'Pelindung dari hujan', syllables: ['PA', 'YUNG'] },
+const sentenceBank: SentenceData[] = [
+  { sentence: 'Ibu memasak nasi', image: '👩‍🍳', hint: 'Kegiatan di dapur', words: ['Ibu', 'memasak', 'nasi'] },
+  { sentence: 'Ayah membaca koran', image: '📰', hint: 'Kegiatan pagi hari', words: ['Ayah', 'membaca', 'koran'] },
+  { sentence: 'Adik minum susu', image: '🥛', hint: 'Minuman bergizi', words: ['Adik', 'minum', 'susu'] },
+  { sentence: 'Kucing makan ikan', image: '🐱', hint: 'Hewan makan', words: ['Kucing', 'makan', 'ikan'] },
+  { sentence: 'Kakak pergi sekolah', image: '🏫', hint: 'Kegiatan belajar', words: ['Kakak', 'pergi', 'sekolah'] },
+  { sentence: 'Burung terbang tinggi', image: '🐦', hint: 'Hewan di langit', words: ['Burung', 'terbang', 'tinggi'] },
+  { sentence: 'Anak bermain bola', image: '⚽', hint: 'Olahraga favorit', words: ['Anak', 'bermain', 'bola'] },
+  { sentence: 'Nenek merajut syal', image: '🧶', hint: 'Kegiatan nenek', words: ['Nenek', 'merajut', 'syal'] },
+  { sentence: 'Kelinci suka wortel', image: '🐰', hint: 'Makanan kelinci', words: ['Kelinci', 'suka', 'wortel'] },
+  { sentence: 'Petani menanam padi', image: '🌾', hint: 'Kegiatan di sawah', words: ['Petani', 'menanam', 'padi'] },
+  { sentence: 'Dokter memeriksa pasien', image: '👨‍⚕️', hint: 'Di rumah sakit', words: ['Dokter', 'memeriksa', 'pasien'] },
+  { sentence: 'Guru mengajar murid', image: '👩‍🏫', hint: 'Di sekolah', words: ['Guru', 'mengajar', 'murid'] },
+  { sentence: 'Sapi makan rumput', image: '🐄', hint: 'Hewan ternak', words: ['Sapi', 'makan', 'rumput'] },
+  { sentence: 'Nelayan menangkap ikan', image: '🎣', hint: 'Di laut', words: ['Nelayan', 'menangkap', 'ikan'] },
+  { sentence: 'Rina menulis surat', image: '✉️', hint: 'Berkirim kabar', words: ['Rina', 'menulis', 'surat'] },
+  { sentence: 'Budi menggambar rumah', image: '🏠', hint: 'Kegiatan seni', words: ['Budi', 'menggambar', 'rumah'] },
+  { sentence: 'Anjing menjaga rumah', image: '🐕', hint: 'Hewan peliharaan', words: ['Anjing', 'menjaga', 'rumah'] },
+  { sentence: 'Koki membuat kue', image: '🧁', hint: 'Di dapur', words: ['Koki', 'membuat', 'kue'] },
+  { sentence: 'Polisi mengatur lalu lintas', image: '👮', hint: 'Di jalan raya', words: ['Polisi', 'mengatur', 'lalu lintas'] },
+  { sentence: 'Pilot menerbangkan pesawat', image: '✈️', hint: 'Di langit', words: ['Pilot', 'menerbangkan', 'pesawat'] },
+  { sentence: 'Kakek menyiram tanaman', image: '🌱', hint: 'Di kebun', words: ['Kakek', 'menyiram', 'tanaman'] },
+  { sentence: 'Ibu mencuci baju', image: '👕', hint: 'Kegiatan rumah', words: ['Ibu', 'mencuci', 'baju'] },
+  { sentence: 'Pemadam memadamkan api', image: '🚒', hint: 'Saat kebakaran', words: ['Pemadam', 'memadamkan', 'api'] },
+  { sentence: 'Monyet memanjat pohon', image: '🐒', hint: 'Di hutan', words: ['Monyet', 'memanjat', 'pohon'] },
+  { sentence: 'Lebah membuat madu', image: '🐝', hint: 'Hewan kecil rajin', words: ['Lebah', 'membuat', 'madu'] },
 ];
 
 const shuffleArray = <T,>(array: T[]): T[] => {
@@ -64,26 +58,26 @@ const shuffleArray = <T,>(array: T[]): T[] => {
   return shuffled;
 };
 
-const generateQuestions = (count: number = 5): WordQuestion[] => {
-  const shuffled = shuffleArray(wordBank);
-  return shuffled.slice(0, count).map((word, index) => ({
-    ...word,
+const generateQuestions = (count: number = 5): SentenceQuestion[] => {
+  const shuffled = shuffleArray(sentenceBank);
+  return shuffled.slice(0, count).map((sentence, index) => ({
+    ...sentence,
     id: index,
   }));
 };
 
-export const WordArrangeGame = () => {
+export const SentenceArrangeGame = () => {
   const { progress, addStars, completeLevel } = useGame();
   const { 
     playCorrect, playWrong, playClick, playSelect, playLevelComplete,
     isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic, startBgMusic 
   } = useSound();
-  const { speak, speakSyllables } = useSpeech();
+  const { speak } = useSpeech();
   
-  const [questions, setQuestions] = useState<WordQuestion[]>([]);
+  const [questions, setQuestions] = useState<SentenceQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [shuffledSyllables, setShuffledSyllables] = useState<string[]>([]);
-  const [selectedSyllables, setSelectedSyllables] = useState<string[]>([]);
+  const [shuffledWords, setShuffledWords] = useState<string[]>([]);
+  const [selectedWords, setSelectedWords] = useState<string[]>([]);
   const [availableIndices, setAvailableIndices] = useState<number[]>([]);
   const [feedback, setFeedback] = useState<boolean | null>(null);
   const [correctCount, setCorrectCount] = useState(0);
@@ -104,11 +98,11 @@ export const WordArrangeGame = () => {
     }
   }, []);
 
-  const initQuestion = (question: WordQuestion) => {
-    const syllables = question.syllables;
-    const shuffled = shuffleArray(syllables);
-    setShuffledSyllables(shuffled);
-    setSelectedSyllables([]);
+  const initQuestion = (question: SentenceQuestion) => {
+    const words = question.words;
+    const shuffled = shuffleArray(words);
+    setShuffledWords(shuffled);
+    setSelectedWords([]);
     setAvailableIndices(shuffled.map((_, i) => i));
   };
 
@@ -125,38 +119,38 @@ export const WordArrangeGame = () => {
     }
   }, [currentIndex, questions]);
 
-  const handleSpeakWord = useCallback(() => {
+  const handleSpeakSentence = useCallback(() => {
     playClick();
     if (questions.length > 0 && currentIndex < questions.length) {
       const current = questions[currentIndex];
-      speakSyllables(current.word, current.syllables);
+      speak(current.sentence);
     }
-  }, [questions, currentIndex, playClick, speakSyllables]);
+  }, [questions, currentIndex, playClick, speak]);
 
-  const handleSyllableSelect = (index: number) => {
+  const handleWordSelect = (index: number) => {
     if (feedback !== null) return;
     
     playSelect();
-    const syllable = shuffledSyllables[index];
-    setSelectedSyllables(prev => [...prev, syllable]);
+    const word = shuffledWords[index];
+    setSelectedWords(prev => [...prev, word]);
     setAvailableIndices(prev => prev.filter(i => i !== index));
   };
 
-  const handleSyllableRemove = (selectedIndex: number) => {
+  const handleWordRemove = (selectedIndex: number) => {
     if (feedback !== null) return;
     
     playClick();
-    const syllable = selectedSyllables[selectedIndex];
+    const word = selectedWords[selectedIndex];
     
-    const matchingIndices = shuffledSyllables
-      .map((s, i) => ({ syllable: s, index: i }))
-      .filter(item => item.syllable === syllable && !availableIndices.includes(item.index));
+    const matchingIndices = shuffledWords
+      .map((w, i) => ({ word: w, index: i }))
+      .filter(item => item.word === word && !availableIndices.includes(item.index));
     
     if (matchingIndices.length > 0) {
       setAvailableIndices(prev => [...prev, matchingIndices[0].index].sort((a, b) => a - b));
     }
     
-    setSelectedSyllables(prev => prev.filter((_, i) => i !== selectedIndex));
+    setSelectedWords(prev => prev.filter((_, i) => i !== selectedIndex));
   };
 
   const handleReset = () => {
@@ -169,27 +163,27 @@ export const WordArrangeGame = () => {
   addStarsRef.current = addStars;
 
   const checkAnswer = useCallback(() => {
-    const answer = selectedSyllables.join('');
-    const correctAnswer = questions[currentIndex].syllables.join('');
+    const answer = selectedWords.join(' ');
+    const correctAnswer = questions[currentIndex].words.join(' ');
     const isCorrect = answer === correctAnswer;
     
     if (isCorrect) {
       playCorrect();
       setCorrectCount(prev => prev + 1);
-      addStarsRef.current('wordArrange', 1);
+      addStarsRef.current('sentence', 1);
     } else {
       playWrong();
     }
     
     setFeedback(isCorrect);
-  }, [selectedSyllables, questions, currentIndex, playCorrect, playWrong]);
+  }, [selectedWords, questions, currentIndex, playCorrect, playWrong]);
 
   useEffect(() => {
-    if (questions.length > 0 && selectedSyllables.length === questions[currentIndex]?.syllables.length) {
+    if (questions.length > 0 && selectedWords.length === questions[currentIndex]?.words.length) {
       const timer = setTimeout(checkAnswer, 300);
       return () => clearTimeout(timer);
     }
-  }, [selectedSyllables, questions, currentIndex, checkAnswer]);
+  }, [selectedWords, questions, currentIndex, checkAnswer]);
 
   const handleNextQuestion = useCallback(() => {
     setFeedback(null);
@@ -198,7 +192,7 @@ export const WordArrangeGame = () => {
       playLevelComplete();
       setIsComplete(true);
       if (!hasCompletedLevel) {
-        completeLevel('wordArrange');
+        completeLevel('sentence');
         setHasCompletedLevel(true);
       }
     } else {
@@ -216,8 +210,8 @@ export const WordArrangeGame = () => {
       <FloatingIcons variant="reading" />
       
       <GameHeader 
-        title="Susun Kata"
-        stars={progress.wordArrange.stars}
+        title="Susun Kalimat"
+        stars={progress.sentence.stars}
         variant="reading"
         isMuted={isMuted}
         isBgMusicPlaying={isBgMusicPlaying}
@@ -236,30 +230,30 @@ export const WordArrangeGame = () => {
         <div className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-card p-6 w-full max-w-sm text-center relative border-2 border-secondary/20">
           {/* Audio Button - Fixed click area */}
           <button
-            onClick={handleSpeakWord}
+            onClick={handleSpeakSentence}
             className="absolute top-4 right-4 w-12 h-12 bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors active:scale-95 shadow-md flex items-center justify-center"
-            aria-label="Dengarkan kata"
+            aria-label="Dengarkan kalimat"
           >
             <Volume2 className="w-6 h-6 text-secondary pointer-events-none" />
           </button>
           
           <span className="text-8xl animate-float block mb-2">{currentQuestion.image}</span>
           <p className="text-muted-foreground text-sm">{currentQuestion.hint}</p>
-          <p className="text-xs text-muted-foreground mt-1">Ketuk 🔊 untuk mendengar</p>
+          <p className="text-xs text-muted-foreground mt-1">Ketuk 🔊 untuk mendengar kalimat</p>
         </div>
         
         {/* Answer Area */}
-        <div className="bg-card/95 backdrop-blur-sm rounded-2xl shadow-card p-4 w-full max-w-sm min-h-[70px] flex items-center justify-center gap-2 flex-wrap border-2 border-primary/20">
-          {selectedSyllables.length === 0 ? (
-            <span className="text-muted-foreground">Ketuk suku kata untuk menyusun</span>
+        <div className="bg-card/95 backdrop-blur-sm rounded-2xl shadow-card p-4 w-full max-w-sm min-h-[80px] flex items-center justify-center gap-2 flex-wrap border-2 border-primary/20">
+          {selectedWords.length === 0 ? (
+            <span className="text-muted-foreground">Ketuk kata untuk menyusun kalimat</span>
           ) : (
-            selectedSyllables.map((syllable, index) => (
+            selectedWords.map((word, index) => (
               <button
                 key={index}
-                onClick={() => handleSyllableRemove(index)}
+                onClick={() => handleWordRemove(index)}
                 disabled={feedback !== null}
                 className={cn(
-                  'px-4 py-3 text-xl font-bold rounded-xl transition-all duration-200',
+                  'px-4 py-3 text-lg font-bold rounded-xl transition-all duration-200',
                   'shadow-md hover:scale-105 active:scale-95',
                   feedback === true
                     ? 'bg-success text-success-foreground animate-bounce'
@@ -268,28 +262,28 @@ export const WordArrangeGame = () => {
                     : 'bg-secondary text-secondary-foreground'
                 )}
               >
-                {syllable}
+                {word}
               </button>
             ))
           )}
         </div>
         
-        {/* Syllable Options */}
+        {/* Word Options */}
         <div className="flex flex-wrap justify-center gap-3 w-full max-w-sm">
-          {shuffledSyllables.map((syllable, index) => (
+          {shuffledWords.map((word, index) => (
             <button
               key={index}
-              onClick={() => handleSyllableSelect(index)}
+              onClick={() => handleWordSelect(index)}
               disabled={!availableIndices.includes(index) || feedback !== null}
               className={cn(
-                'px-6 py-4 text-2xl font-bold rounded-2xl transition-all duration-200',
+                'px-5 py-4 text-xl font-bold rounded-2xl transition-all duration-200',
                 'shadow-card hover:shadow-lg',
                 availableIndices.includes(index)
                   ? 'bg-primary text-primary-foreground hover:scale-110 active:scale-95'
                   : 'bg-muted text-muted-foreground opacity-30 cursor-not-allowed'
               )}
             >
-              {syllable}
+              {word}
             </button>
           ))}
         </div>
@@ -297,11 +291,11 @@ export const WordArrangeGame = () => {
         {/* Reset Button */}
         <button
           onClick={handleReset}
-          disabled={feedback !== null || selectedSyllables.length === 0}
+          disabled={feedback !== null || selectedWords.length === 0}
           className={cn(
             'flex items-center gap-2 px-4 py-2 rounded-full transition-all',
             'text-muted-foreground hover:text-foreground hover:bg-muted',
-            (feedback !== null || selectedSyllables.length === 0) && 'opacity-50 cursor-not-allowed'
+            (feedback !== null || selectedWords.length === 0) && 'opacity-50 cursor-not-allowed'
           )}
         >
           <RotateCcw className="w-5 h-5" />
@@ -328,4 +322,4 @@ export const WordArrangeGame = () => {
   );
 };
 
-export default WordArrangeGame;
+export default SentenceArrangeGame;
