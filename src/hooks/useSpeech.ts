@@ -1,81 +1,87 @@
-import { useCallback, useRef, useEffect } from 'react';
+import { useCallback, useState, useEffect } from 'react';
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
+import { Capacitor } from '@capacitor/core';
 
 export const useSpeech = () => {
-  const isSpeakingRef = useRef(false);
-  const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null);
+  const [isSupported, setIsSupported] = useState(false);
 
-  // Ensure voices are loaded
   useEffect(() => {
-    const loadVoices = () => {
-      window.speechSynthesis.getVoices();
+    const checkSupport = async () => {
+      // Di Android (Native), kita asumsikan support karena pakai Plugin
+      if (Capacitor.isNativePlatform()) {
+        setIsSupported(true);
+      } else {
+        // Di Web Browser biasa, kita cek fitur bawaan
+        if (typeof window !== 'undefined' && 'speechSynthesis' in window) {
+          setIsSupported(true);
+        }
+      }
     };
-    
-    loadVoices();
-    window.speechSynthesis.onvoiceschanged = loadVoices;
-    
-    return () => {
-      window.speechSynthesis.onvoiceschanged = null;
-    };
+    checkSupport();
   }, []);
 
-  const speak = useCallback((text: string, rate: number = 0.8) => {
-    // Ensure speech synthesis is available
-    if (!window.speechSynthesis) {
-      console.warn('Speech synthesis not supported');
-      return;
-    }
+  const speak = useCallback(async (text: string, rate: number = 1.0) => {
+    if (!text) return;
 
-    // Cancel any ongoing speech
-    window.speechSynthesis.cancel();
-    
-    // Use requestAnimationFrame + setTimeout for better timing
-    requestAnimationFrame(() => {
-      setTimeout(() => {
+    try {
+      // Hentikan suara sebelumnya (agar tidak tumpang tindih)
+      await stop();
+
+      if (Capacitor.isNativePlatform()) {
+        // --- LOGIKA UNTUK HP (ANDROID/IOS) ---
+        await TextToSpeech.speak({
+          text: text,
+          lang: 'id-ID',    // Pakai Bahasa Indonesia
+          rate: rate,       // Kecepatan (0.5 - 2.0)
+          pitch: 1.0,       // Nada
+          volume: 1.0,
+          category: 'ambient',
+        });
+      } else {
+        // --- LOGIKA UNTUK WEB BROWSER (FALLBACK) ---
+        // Ini tetap kita simpan agar bisa dites di Chrome laptop
         const utterance = new SpeechSynthesisUtterance(text);
         utterance.lang = 'id-ID';
         utterance.rate = rate;
-        utterance.pitch = 1.1;
-        utterance.volume = 1;
         
-        // Try to find Indonesian voice
+        // Cari suara Indonesia di browser
         const voices = window.speechSynthesis.getVoices();
-        const indonesianVoice = voices.find(voice => 
-          voice.lang.includes('id') || voice.lang.includes('ID')
-        );
-        if (indonesianVoice) {
-          utterance.voice = indonesianVoice;
-        }
-        
-        utterance.onstart = () => {
-          isSpeakingRef.current = true;
-        };
-        
-        utterance.onend = () => {
-          isSpeakingRef.current = false;
-        };
-        
-        utterance.onerror = (e) => {
-          console.log('Speech error:', e);
-          isSpeakingRef.current = false;
-        };
+        const indoVoice = voices.find(v => v.lang.includes('id'));
+        if (indoVoice) utterance.voice = indoVoice;
 
-        utteranceRef.current = utterance;
         window.speechSynthesis.speak(utterance);
-      }, 100);
-    });
+      }
+    } catch (error) {
+      console.error("Gagal memutar suara:", error);
+    }
   }, []);
 
-  const speakSyllables = useCallback((word: string, syllables: string[]) => {
-    // Speak each syllable with pause, then the full word
-    const syllableText = syllables.join('... ');
-    const fullText = syllableText + '... ' + word;
-    speak(fullText, 0.7);
+  const speakSyllables = useCallback(async (word: string, syllables: string[]) => {
+    // Trik: Tambahkan titik/koma agar mesin TTS memberikan jeda natural
+    // Contoh: "A. PEL. APEL"
+    const textWithPause = `${syllables.join('. ')}. ${word}`;
+    
+    // Bicara sedikit lebih lambat untuk pengejaan
+    await speak(textWithPause, 0.75); 
   }, [speak]);
 
-  const stop = useCallback(() => {
-    window.speechSynthesis.cancel();
-    isSpeakingRef.current = false;
+  const stop = useCallback(async () => {
+    try {
+      if (Capacitor.isNativePlatform()) {
+        await TextToSpeech.stop();
+      } else {
+        window.speechSynthesis.cancel();
+      }
+    } catch (e) {
+      // Abaikan error saat stop
+    }
   }, []);
 
-  return { speak, speakSyllables, stop };
+  return { 
+    speak, 
+    speakSyllables, 
+    stop, // alias cancel
+    cancel: stop,
+    isSupported 
+  };
 };
