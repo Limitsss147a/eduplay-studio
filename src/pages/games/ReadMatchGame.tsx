@@ -17,6 +17,7 @@ interface WordData {
 }
 
 const wordBank: WordData[] = [
+  // Kata dasar
   { word: 'BUKU', image: '📚', syllables: ['BU', 'KU'] },
   { word: 'KUDA', image: '🐴', syllables: ['KU', 'DA'] },
   { word: 'KURSI', image: '🪑', syllables: ['KUR', 'SI'] },
@@ -29,7 +30,6 @@ const wordBank: WordData[] = [
   { word: 'GIGI', image: '🦷', syllables: ['GI', 'GI'] },
   { word: 'PADI', image: '🌾', syllables: ['PA', 'DI'] },
   { word: 'NASI', image: '🍚', syllables: ['NA', 'SI'] },
-  // New words
   { word: 'APEL', image: '🍎', syllables: ['A', 'PEL'] },
   { word: 'PISANG', image: '🍌', syllables: ['PI', 'SANG'] },
   { word: 'JERUK', image: '🍊', syllables: ['JE', 'RUK'] },
@@ -48,6 +48,46 @@ const wordBank: WordData[] = [
   { word: 'BINTANG', image: '⭐', syllables: ['BIN', 'TANG'] },
   { word: 'BULAN', image: '🌙', syllables: ['BU', 'LAN'] },
   { word: 'HUJAN', image: '🌧️', syllables: ['HU', 'JAN'] },
+  // Kata tambahan
+  { word: 'GAJAH', image: '🐘', syllables: ['GA', 'JAH'] },
+  { word: 'SINGA', image: '🦁', syllables: ['SI', 'NGA'] },
+  { word: 'ZEBRA', image: '🦓', syllables: ['ZE', 'BRA'] },
+  { word: 'KELINCI', image: '🐰', syllables: ['KE', 'LIN', 'CI'] },
+  { word: 'HARIMAU', image: '🐯', syllables: ['HA', 'RI', 'MAU'] },
+  { word: 'BEBEK', image: '🦆', syllables: ['BE', 'BEK'] },
+  { word: 'AYAM', image: '🐔', syllables: ['A', 'YAM'] },
+  { word: 'KAMBING', image: '🐐', syllables: ['KAM', 'BING'] },
+  { word: 'DOMBA', image: '🐑', syllables: ['DOM', 'BA'] },
+  { word: 'KERBAU', image: '🐃', syllables: ['KER', 'BAU'] },
+  { word: 'SEMUT', image: '🐜', syllables: ['SE', 'MUT'] },
+  { word: 'LEBAH', image: '🐝', syllables: ['LE', 'BAH'] },
+  { word: 'WORTEL', image: '🥕', syllables: ['WOR', 'TEL'] },
+  { word: 'TOMAT', image: '🍅', syllables: ['TO', 'MAT'] },
+  { word: 'MANGGA', image: '🥭', syllables: ['MANG', 'GA'] },
+  { word: 'ANGGUR', image: '🍇', syllables: ['ANG', 'GUR'] },
+  { word: 'SEMANGKA', image: '🍉', syllables: ['SE', 'MANG', 'KA'] },
+  { word: 'STROBERI', image: '🍓', syllables: ['STRO', 'BE', 'RI'] },
+  { word: 'LEMON', image: '🍋', syllables: ['LE', 'MON'] },
+  { word: 'KELAPA', image: '🥥', syllables: ['KE', 'LA', 'PA'] },
+  { word: 'JAGUNG', image: '🌽', syllables: ['JA', 'GUNG'] },
+  { word: 'KENTANG', image: '🥔', syllables: ['KEN', 'TANG'] },
+  { word: 'BROKOLI', image: '🥦', syllables: ['BRO', 'KO', 'LI'] },
+  { word: 'TERONG', image: '🍆', syllables: ['TE', 'RONG'] },
+  { word: 'PENSIL', image: '✏️', syllables: ['PEN', 'SIL'] },
+  { word: 'SEPATU', image: '👟', syllables: ['SE', 'PA', 'TU'] },
+  { word: 'KOMPUTER', image: '💻', syllables: ['KOM', 'PU', 'TER'] },
+  { word: 'TELEVISI', image: '📺', syllables: ['TE', 'LE', 'VI', 'SI'] },
+  { word: 'HELIKOPTER', image: '🚁', syllables: ['HE', 'LI', 'KOP', 'TER'] },
+  { word: 'AMBULANS', image: '🚑', syllables: ['AM', 'BU', 'LANS'] },
+  { word: 'JERAPAH', image: '🦒', syllables: ['JE', 'RA', 'PAH'] },
+  { word: 'PINGUIN', image: '🐧', syllables: ['PI', 'NGU', 'IN'] },
+  { word: 'GORILA', image: '🦍', syllables: ['GO', 'RI', 'LA'] },
+  { word: 'BADAK', image: '🦏', syllables: ['BA', 'DAK'] },
+  { word: 'GURITA', image: '🐙', syllables: ['GU', 'RI', 'TA'] },
+  { word: 'KEPITING', image: '🦀', syllables: ['KE', 'PI', 'TING'] },
+  { word: 'KUPU-KUPU', image: '🦋', syllables: ['KU', 'PU', 'KU', 'PU'] },
+  { word: 'PELANGI', image: '🌈', syllables: ['PE', 'LA', 'NGI'] },
+  { word: 'MATAHARI', image: '☀️', syllables: ['MA', 'TA', 'HA', 'RI'] },
 ];
 
 const allImages = wordBank.map(w => ({ word: w.word, image: w.image }));

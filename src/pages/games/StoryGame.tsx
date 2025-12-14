@@ -20,7 +20,7 @@ interface StoryQuestion {
 }
 
 const storyBank: StoryQuestion[] = [
-  // Short stories
+  // Cerita pendek (mudah)
   {
     id: 1,
     story: 'Rina pergi ke pasar. Rina membeli buah apel.',
@@ -60,7 +60,7 @@ const storyBank: StoryQuestion[] = [
     question: 'Dina bermain dengan siapa?',
     options: [
       { text: 'Rudi', image: '👦' },
-      { text: 'Siti', image: '👧' },
+      { text: 'Maya', image: '👧' },
       { text: 'Sendiri', image: '🧍' },
     ],
     correctIndex: 0,
@@ -89,8 +89,8 @@ const storyBank: StoryQuestion[] = [
   },
   {
     id: 7,
-    story: 'Hari ini hujan deras. Siti membawa payung biru.',
-    question: 'Siti membawa apa?',
+    story: 'Hari ini hujan deras. Dewi membawa payung biru.',
+    question: 'Dewi membawa apa?',
     options: [
       { text: 'Tas', image: '🎒' },
       { text: 'Payung', image: '☂️' },
@@ -111,8 +111,8 @@ const storyBank: StoryQuestion[] = [
   },
   {
     id: 9,
-    story: 'Siti suka makan roti. Siti makan roti setiap pagi.',
-    question: 'Siti suka makan apa?',
+    story: 'Maya suka makan roti. Maya makan roti setiap pagi.',
+    question: 'Maya suka makan apa?',
     options: [
       { text: 'Roti', image: '🍞' },
       { text: 'Nasi', image: '🍚' },
@@ -131,7 +131,6 @@ const storyBank: StoryQuestion[] = [
     ],
     correctIndex: 1,
   },
-  // New short stories
   {
     id: 11,
     story: 'Rudi mempunyai anjing. Anjing Rudi suka bermain bola.',
@@ -187,9 +186,65 @@ const storyBank: StoryQuestion[] = [
     ],
     correctIndex: 1,
   },
-  // Longer stories (like the beetroot example)
+  // Cerita pendek tambahan
   {
     id: 16,
+    story: 'Andi bermain layang-layang. Layang-layang Andi terbang tinggi.',
+    question: 'Apa yang dimainkan Andi?',
+    options: [
+      { text: 'Layang-layang', image: '🪁' },
+      { text: 'Bola', image: '⚽' },
+      { text: 'Boneka', image: '🧸' },
+    ],
+    correctIndex: 0,
+  },
+  {
+    id: 17,
+    story: 'Tina punya tiga boneka. Boneka kesukaan Tina berwarna pink.',
+    question: 'Berapa boneka yang Tina punya?',
+    options: [
+      { text: 'Dua', image: '2️⃣' },
+      { text: 'Tiga', image: '3️⃣' },
+      { text: 'Empat', image: '4️⃣' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 18,
+    story: 'Pak Guru mengajar di kelas. Murid-murid belajar dengan rajin.',
+    question: 'Siapa yang mengajar?',
+    options: [
+      { text: 'Pak Guru', image: '👨‍🏫' },
+      { text: 'Bu Guru', image: '👩‍🏫' },
+      { text: 'Murid', image: '👦' },
+    ],
+    correctIndex: 0,
+  },
+  {
+    id: 19,
+    story: 'Hari Minggu keluarga pergi ke pantai. Mereka bermain pasir.',
+    question: 'Keluarga pergi ke mana?',
+    options: [
+      { text: 'Gunung', image: '⛰️' },
+      { text: 'Pantai', image: '🏖️' },
+      { text: 'Taman', image: '🌳' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 20,
+    story: 'Putri menyiram bunga setiap pagi. Bunganya tumbuh subur.',
+    question: 'Kapan Putri menyiram bunga?',
+    options: [
+      { text: 'Siang', image: '☀️' },
+      { text: 'Malam', image: '🌙' },
+      { text: 'Pagi', image: '🌅' },
+    ],
+    correctIndex: 2,
+  },
+  // Cerita panjang (sedang)
+  {
+    id: 21,
     title: 'Kucing Malas',
     story: 'Kucing adalah hewan berbulu lembut yang suka tidur. Kucing bisa tidur sampai 16 jam sehari. Kucing suka makan ikan dan daging. Kucing juga suka bermain dengan bola benang. Kucing adalah hewan peliharaan yang lucu dan menggemaskan.',
     question: 'Berapa jam kucing bisa tidur dalam sehari?',
@@ -201,7 +256,7 @@ const storyBank: StoryQuestion[] = [
     correctIndex: 1,
   },
   {
-    id: 17,
+    id: 22,
     title: 'Buah Pisang',
     story: 'Pisang adalah buah yang berwarna kuning. Pisang memiliki rasa manis dan lembut. Pisang baik untuk kesehatan karena mengandung banyak vitamin. Kita bisa makan pisang langsung atau dibuat jus. Pisang juga bisa dibuat menjadi keripik pisang yang renyah.',
     question: 'Apa warna buah pisang?',
@@ -213,7 +268,7 @@ const storyBank: StoryQuestion[] = [
     correctIndex: 2,
   },
   {
-    id: 18,
+    id: 23,
     title: 'Gajah Besar',
     story: 'Gajah adalah hewan darat terbesar di dunia. Gajah memiliki belalai yang panjang. Belalai gajah digunakan untuk mengambil makanan dan minum air. Gajah suka makan rumput, daun, dan buah-buahan. Gajah hidup berkelompok bersama keluarganya.',
     question: 'Untuk apa gajah menggunakan belalainya?',
@@ -225,7 +280,7 @@ const storyBank: StoryQuestion[] = [
     correctIndex: 1,
   },
   {
-    id: 19,
+    id: 24,
     title: 'Lebah Rajin',
     story: 'Lebah adalah serangga kecil yang sangat rajin. Lebah hidup di sarang bersama ribuan lebah lain. Lebah membuat madu dari nektar bunga. Madu sangat manis dan baik untuk kesehatan. Lebah terbang dari bunga ke bunga untuk mengumpulkan nektar.',
     question: 'Lebah membuat madu dari apa?',
@@ -237,7 +292,7 @@ const storyBank: StoryQuestion[] = [
     correctIndex: 1,
   },
   {
-    id: 20,
+    id: 25,
     title: 'Matahari',
     story: 'Matahari adalah bintang yang sangat besar dan panas. Matahari memberikan cahaya dan panas untuk bumi. Tanpa matahari, bumi akan gelap dan dingin. Matahari terbit di timur dan terbenam di barat. Matahari sangat penting untuk kehidupan di bumi.',
     question: 'Matahari terbit dari arah mana?',
@@ -249,7 +304,7 @@ const storyBank: StoryQuestion[] = [
     correctIndex: 2,
   },
   {
-    id: 21,
+    id: 26,
     title: 'Buah Semangka',
     story: 'Semangka adalah buah yang besar dan bulat. Kulit semangka berwarna hijau dengan garis-garis. Daging semangka berwarna merah dan rasanya manis. Semangka mengandung banyak air sehingga sangat segar. Semangka sangat nikmat dimakan saat cuaca panas.',
     question: 'Apa warna daging buah semangka?',
@@ -261,7 +316,7 @@ const storyBank: StoryQuestion[] = [
     correctIndex: 1,
   },
   {
-    id: 22,
+    id: 27,
     title: 'Kelinci Lucu',
     story: 'Kelinci adalah hewan yang lucu dan menggemaskan. Kelinci memiliki telinga yang panjang dan bulu yang lembut. Kelinci suka makan wortel dan sayuran hijau. Kelinci bisa melompat dengan cepat. Banyak orang memelihara kelinci sebagai hewan peliharaan.',
     question: 'Makanan kesukaan kelinci adalah?',
@@ -273,7 +328,7 @@ const storyBank: StoryQuestion[] = [
     correctIndex: 0,
   },
   {
-    id: 23,
+    id: 28,
     title: 'Hujan',
     story: 'Hujan turun dari awan di langit. Air hujan berasal dari uap air laut yang naik ke atas. Hujan membuat tanaman tumbuh subur. Saat hujan, kita perlu membawa payung agar tidak basah. Hujan juga membuat udara menjadi segar dan sejuk.',
     question: 'Air hujan berasal dari mana?',
@@ -285,7 +340,7 @@ const storyBank: StoryQuestion[] = [
     correctIndex: 1,
   },
   {
-    id: 24,
+    id: 29,
     title: 'Burung Merak',
     story: 'Burung merak adalah burung yang sangat indah. Burung merak jantan memiliki ekor yang besar dan berwarna-warni. Ekor merak bisa mengembang seperti kipas. Burung merak suka makan biji-bijian dan serangga. Burung merak berasal dari Asia.',
     question: 'Ekor burung merak bisa mengembang seperti apa?',
@@ -297,7 +352,7 @@ const storyBank: StoryQuestion[] = [
     correctIndex: 1,
   },
   {
-    id: 25,
+    id: 30,
     title: 'Bintang di Langit',
     story: 'Bintang adalah benda langit yang bersinar di malam hari. Ada banyak sekali bintang di langit. Bintang terlihat kecil karena jaraknya sangat jauh dari bumi. Pada malam yang cerah, kita bisa melihat banyak bintang berkelip-kelip. Orang zaman dulu menggunakan bintang untuk petunjuk arah.',
     question: 'Kapan kita bisa melihat bintang?',
@@ -307,6 +362,127 @@ const storyBank: StoryQuestion[] = [
       { text: 'Malam hari', image: '🌙' },
     ],
     correctIndex: 2,
+  },
+  // Cerita panjang tambahan (sulit)
+  {
+    id: 31,
+    title: 'Harimau Sumatra',
+    story: 'Harimau Sumatra adalah harimau yang hidup di pulau Sumatra, Indonesia. Harimau ini memiliki bulu berwarna oranye dengan loreng hitam. Harimau Sumatra adalah pemangsa yang kuat. Mereka berburu rusa, babi hutan, dan hewan lainnya. Sayangnya, harimau Sumatra terancam punah karena hutan tempat tinggalnya banyak yang ditebang.',
+    question: 'Di mana harimau Sumatra tinggal?',
+    options: [
+      { text: 'Pulau Jawa', image: '🏝️' },
+      { text: 'Pulau Sumatra', image: '🌴' },
+      { text: 'Pulau Kalimantan', image: '🌲' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 32,
+    title: 'Lumba-lumba Pintar',
+    story: 'Lumba-lumba adalah mamalia laut yang sangat pintar. Lumba-lumba bernapas dengan paru-paru seperti manusia. Mereka harus naik ke permukaan untuk bernapas. Lumba-lumba berkomunikasi dengan suara-suara khusus. Lumba-lumba suka berenang berkelompok dan sangat ramah kepada manusia.',
+    question: 'Bagaimana lumba-lumba bernapas?',
+    options: [
+      { text: 'Dengan insang', image: '🐟' },
+      { text: 'Dengan paru-paru', image: '💨' },
+      { text: 'Dengan kulit', image: '🦎' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 33,
+    title: 'Petualangan di Kebun',
+    story: 'Rudi dan Maya pergi ke kebun kakek. Di sana mereka melihat banyak pohon buah. Ada pohon mangga, jeruk, dan rambutan. Rudi membantu kakek memetik mangga yang sudah matang. Maya mengumpulkan jeruk yang jatuh. Mereka sangat senang bisa membantu kakek.',
+    question: 'Siapa yang membantu memetik mangga?',
+    options: [
+      { text: 'Maya', image: '👧' },
+      { text: 'Rudi', image: '👦' },
+      { text: 'Kakek', image: '👴' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 34,
+    title: 'Sekolah Baru',
+    story: 'Hari pertama sekolah sangat menegangkan untuk Dina. Dina masuk ke kelas baru dan belum kenal siapa-siapa. Tiba-tiba seorang anak perempuan menyapa Dina dengan ramah. Namanya adalah Sari. Sari mengajak Dina duduk bersamanya. Sejak hari itu, Dina dan Sari menjadi teman baik.',
+    question: 'Siapa nama teman baru Dina?',
+    options: [
+      { text: 'Maya', image: '👧' },
+      { text: 'Rina', image: '👧' },
+      { text: 'Sari', image: '👧' },
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 35,
+    title: 'Dokter Hewan',
+    story: 'Pak Budi adalah seorang dokter hewan. Setiap hari, Pak Budi menolong hewan yang sakit. Hari ini ada seekor kucing yang kakinya terluka. Pak Budi dengan hati-hati membersihkan luka kucing itu. Setelah diberi obat, kucing itu merasa lebih baik. Pemilik kucing sangat berterima kasih kepada Pak Budi.',
+    question: 'Apa pekerjaan Pak Budi?',
+    options: [
+      { text: 'Dokter manusia', image: '👨‍⚕️' },
+      { text: 'Dokter hewan', image: '🩺' },
+      { text: 'Guru', image: '👨‍🏫' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 36,
+    title: 'Penyu dan Laut',
+    story: 'Penyu adalah reptil yang hidup di laut. Penyu memiliki cangkang keras untuk melindungi tubuhnya. Penyu betina bertelur di pantai berpasir. Anak penyu yang baru menetas langsung berlari menuju laut. Penyu bisa berenang sangat jauh dan hidup sangat lama, bahkan sampai seratus tahun.',
+    question: 'Di mana penyu betina bertelur?',
+    options: [
+      { text: 'Di laut', image: '🌊' },
+      { text: 'Di pantai', image: '🏖️' },
+      { text: 'Di sungai', image: '🏞️' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 37,
+    title: 'Petani dan Sawah',
+    story: 'Pak Tani bekerja di sawah setiap hari. Pagi-pagi, Pak Tani sudah pergi ke sawah membawa cangkul. Pak Tani menanam padi dengan tekun. Saat musim panen, padi yang ditanam Pak Tani berbuah lebat. Pak Tani menjual beras hasil panennya ke pasar. Uang hasil panen digunakan untuk kebutuhan keluarga.',
+    question: 'Apa yang dibawa Pak Tani ke sawah?',
+    options: [
+      { text: 'Sapu', image: '🧹' },
+      { text: 'Cangkul', image: '⛏️' },
+      { text: 'Panci', image: '🍳' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 38,
+    title: 'Perpustakaan Sekolah',
+    story: 'Di sekolah Tina ada perpustakaan yang besar. Perpustakaan itu memiliki ribuan buku. Tina suka membaca buku cerita dan ensiklopedia. Setiap istirahat, Tina pergi ke perpustakaan. Bu Librarian selalu ramah membantu Tina mencari buku. Tina ingin menjadi penulis buku ketika besar nanti.',
+    question: 'Apa cita-cita Tina?',
+    options: [
+      { text: 'Guru', image: '👩‍🏫' },
+      { text: 'Dokter', image: '👩‍⚕️' },
+      { text: 'Penulis buku', image: '✍️' },
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 39,
+    title: 'Elang dan Tikus',
+    story: 'Elang adalah burung pemangsa yang sangat tajam penglihatannya. Elang terbang tinggi di langit mencari mangsa. Dari atas, elang bisa melihat tikus kecil yang berjalan di tanah. Dengan cepat, elang menukik ke bawah. Tikus yang tidak waspada menjadi makanan elang. Begitulah cara elang berburu makanannya.',
+    question: 'Apa yang dimangsa elang dalam cerita?',
+    options: [
+      { text: 'Ikan', image: '🐟' },
+      { text: 'Tikus', image: '🐭' },
+      { text: 'Kelinci', image: '🐰' },
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 40,
+    title: 'Musim Hujan',
+    story: 'Bulan November adalah awal musim hujan di Indonesia. Langit sering mendung dan hujan turun hampir setiap hari. Anak-anak senang bermain hujan-hujanan. Namun, ibu selalu mengingatkan untuk memakai jas hujan agar tidak sakit. Petani juga senang karena sawah mereka mendapat banyak air. Musim hujan membawa berkah untuk semua.',
+    question: 'Kapan musim hujan dimulai di Indonesia?',
+    options: [
+      { text: 'Bulan Mei', image: '5️⃣' },
+      { text: 'Bulan November', image: '1️⃣1️⃣' },
+      { text: 'Bulan Januari', image: '1️⃣' },
+    ],
+    correctIndex: 1,
   },
 ];
 
