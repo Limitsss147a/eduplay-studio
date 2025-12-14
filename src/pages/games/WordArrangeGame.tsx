@@ -22,6 +22,7 @@ interface WordQuestion extends WordData {
 }
 
 const wordBank: WordData[] = [
+  // 2 suku kata (mudah)
   { word: 'APEL', image: '🍎', hint: 'Buah merah yang segar', syllables: ['A', 'PEL'] },
   { word: 'BUKU', image: '📚', hint: 'Untuk membaca', syllables: ['BU', 'KU'] },
   { word: 'KUCING', image: '🐱', hint: 'Hewan berbulu lembut', syllables: ['KU', 'CING'] },
@@ -37,13 +38,9 @@ const wordBank: WordData[] = [
   { word: 'KURSI', image: '🪑', hint: 'Tempat duduk', syllables: ['KUR', 'SI'] },
   { word: 'NASI', image: '🍚', hint: 'Makanan pokok', syllables: ['NA', 'SI'] },
   { word: 'TOPI', image: '🎩', hint: 'Pelindung kepala', syllables: ['TO', 'PI'] },
-  // New words
   { word: 'GAJAH', image: '🐘', hint: 'Hewan besar berbelalai', syllables: ['GA', 'JAH'] },
-  { word: 'HARIMAU', image: '🐯', hint: 'Hewan loreng', syllables: ['HA', 'RI', 'MAU'] },
-  { word: 'KELINCI', image: '🐰', hint: 'Hewan telinga panjang', syllables: ['KE', 'LIN', 'CI'] },
   { word: 'BURUNG', image: '🐦', hint: 'Hewan bersayap', syllables: ['BU', 'RUNG'] },
   { word: 'JERUK', image: '🍊', hint: 'Buah berwarna oranye', syllables: ['JE', 'RUK'] },
-  { word: 'ANGGUR', image: '🍇', hint: 'Buah kecil berkelompok', syllables: ['ANG', 'GUR'] },
   { word: 'MANGGA', image: '🥭', hint: 'Buah manis kuning', syllables: ['MANG', 'GA'] },
   { word: 'SEMUT', image: '🐜', hint: 'Hewan kecil rajin', syllables: ['SE', 'MUT'] },
   { word: 'LEBAH', image: '🐝', hint: 'Hewan pembuat madu', syllables: ['LE', 'BAH'] },
@@ -53,6 +50,39 @@ const wordBank: WordData[] = [
   { word: 'WORTEL', image: '🥕', hint: 'Sayuran oranye', syllables: ['WOR', 'TEL'] },
   { word: 'TOMAT', image: '🍅', hint: 'Buah merah untuk masak', syllables: ['TO', 'MAT'] },
   { word: 'PAYUNG', image: '☂️', hint: 'Pelindung dari hujan', syllables: ['PA', 'YUNG'] },
+  // 3 suku kata (sedang)
+  { word: 'HARIMAU', image: '🐯', hint: 'Hewan loreng', syllables: ['HA', 'RI', 'MAU'] },
+  { word: 'KELINCI', image: '🐰', hint: 'Hewan telinga panjang', syllables: ['KE', 'LIN', 'CI'] },
+  { word: 'ANGGUR', image: '🍇', hint: 'Buah kecil berkelompok', syllables: ['ANG', 'GUR'] },
+  { word: 'SEPATU', image: '👟', hint: 'Alas kaki', syllables: ['SE', 'PA', 'TU'] },
+  { word: 'PENSIL', image: '✏️', hint: 'Alat untuk menulis', syllables: ['PEN', 'SIL'] },
+  { word: 'JENDELA', image: '🪟', hint: 'Lubang cahaya di rumah', syllables: ['JEN', 'DE', 'LA'] },
+  { word: 'MATAHARI', image: '☀️', hint: 'Bintang yang terang', syllables: ['MA', 'TA', 'HA', 'RI'] },
+  { word: 'PELANGI', image: '🌈', hint: 'Lengkung warna di langit', syllables: ['PE', 'LA', 'NGI'] },
+  { word: 'KUPU-KUPU', image: '🦋', hint: 'Serangga bersayap indah', syllables: ['KU', 'PU', 'KU', 'PU'] },
+  { word: 'KAMBING', image: '🐐', hint: 'Hewan bertanduk', syllables: ['KAM', 'BING'] },
+  { word: 'DOMBA', image: '🐑', hint: 'Hewan berbulu tebal', syllables: ['DOM', 'BA'] },
+  { word: 'KERBAU', image: '🐃', hint: 'Hewan pembajak sawah', syllables: ['KER', 'BAU'] },
+  { word: 'KEPITING', image: '🦀', hint: 'Hewan bercapit', syllables: ['KE', 'PI', 'TING'] },
+  { word: 'GURITA', image: '🐙', hint: 'Hewan delapan lengan', syllables: ['GU', 'RI', 'TA'] },
+  { word: 'LUMBA-LUMBA', image: '🐬', hint: 'Hewan pintar di laut', syllables: ['LUM', 'BA', 'LUM', 'BA'] },
+  { word: 'PINGUIN', image: '🐧', hint: 'Burung yang tidak terbang', syllables: ['PI', 'NGU', 'IN'] },
+  { word: 'JERAPAH', image: '🦒', hint: 'Hewan leher panjang', syllables: ['JE', 'RA', 'PAH'] },
+  { word: 'BADAK', image: '🦏', hint: 'Hewan bercula', syllables: ['BA', 'DAK'] },
+  { word: 'GORILA', image: '🦍', hint: 'Kera besar', syllables: ['GO', 'RI', 'LA'] },
+  { word: 'KOMPUTER', image: '💻', hint: 'Alat elektronik', syllables: ['KOM', 'PU', 'TER'] },
+  { word: 'TELEVISI', image: '📺', hint: 'Untuk menonton', syllables: ['TE', 'LE', 'VI', 'SI'] },
+  { word: 'HANDPHONE', image: '📱', hint: 'Alat komunikasi', syllables: ['HAND', 'PHO', 'NE'] },
+  { word: 'HELIKOPTER', image: '🚁', hint: 'Pesawat baling-baling', syllables: ['HE', 'LI', 'KOP', 'TER'] },
+  { word: 'AMBULANS', image: '🚑', hint: 'Mobil rumah sakit', syllables: ['AM', 'BU', 'LANS'] },
+  { word: 'SEMANGKA', image: '🍉', hint: 'Buah merah besar', syllables: ['SE', 'MANG', 'KA'] },
+  { word: 'STROBERI', image: '🍓', hint: 'Buah merah kecil', syllables: ['STRO', 'BE', 'RI'] },
+  { word: 'LEMON', image: '🍋', hint: 'Buah asam kuning', syllables: ['LE', 'MON'] },
+  { word: 'KELAPA', image: '🥥', hint: 'Buah pohon tinggi', syllables: ['KE', 'LA', 'PA'] },
+  { word: 'TERONG', image: '🍆', hint: 'Sayuran ungu', syllables: ['TE', 'RONG'] },
+  { word: 'BROKOLI', image: '🥦', hint: 'Sayuran hijau seperti pohon', syllables: ['BRO', 'KO', 'LI'] },
+  { word: 'JAGUNG', image: '🌽', hint: 'Tanaman berbiji kuning', syllables: ['JA', 'GUNG'] },
+  { word: 'KENTANG', image: '🥔', hint: 'Umbi di tanah', syllables: ['KEN', 'TANG'] },
 ];
 
 const shuffleArray = <T,>(array: T[]): T[] => {

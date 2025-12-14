@@ -22,6 +22,7 @@ interface SentenceQuestion extends SentenceData {
 }
 
 const sentenceBank: SentenceData[] = [
+  // Kalimat 3 kata (mudah)
   { sentence: 'Ibu memasak nasi', image: '👩‍🍳', hint: 'Kegiatan di dapur', words: ['Ibu', 'memasak', 'nasi'] },
   { sentence: 'Ayah membaca koran', image: '📰', hint: 'Kegiatan pagi hari', words: ['Ayah', 'membaca', 'koran'] },
   { sentence: 'Adik minum susu', image: '🥛', hint: 'Minuman bergizi', words: ['Adik', 'minum', 'susu'] },
@@ -40,13 +41,35 @@ const sentenceBank: SentenceData[] = [
   { sentence: 'Budi menggambar rumah', image: '🏠', hint: 'Kegiatan seni', words: ['Budi', 'menggambar', 'rumah'] },
   { sentence: 'Anjing menjaga rumah', image: '🐕', hint: 'Hewan peliharaan', words: ['Anjing', 'menjaga', 'rumah'] },
   { sentence: 'Koki membuat kue', image: '🧁', hint: 'Di dapur', words: ['Koki', 'membuat', 'kue'] },
-  { sentence: 'Polisi mengatur lalu lintas', image: '👮', hint: 'Di jalan raya', words: ['Polisi', 'mengatur', 'lalu lintas'] },
-  { sentence: 'Pilot menerbangkan pesawat', image: '✈️', hint: 'Di langit', words: ['Pilot', 'menerbangkan', 'pesawat'] },
-  { sentence: 'Kakek menyiram tanaman', image: '🌱', hint: 'Di kebun', words: ['Kakek', 'menyiram', 'tanaman'] },
-  { sentence: 'Ibu mencuci baju', image: '👕', hint: 'Kegiatan rumah', words: ['Ibu', 'mencuci', 'baju'] },
-  { sentence: 'Pemadam memadamkan api', image: '🚒', hint: 'Saat kebakaran', words: ['Pemadam', 'memadamkan', 'api'] },
   { sentence: 'Monyet memanjat pohon', image: '🐒', hint: 'Di hutan', words: ['Monyet', 'memanjat', 'pohon'] },
   { sentence: 'Lebah membuat madu', image: '🐝', hint: 'Hewan kecil rajin', words: ['Lebah', 'membuat', 'madu'] },
+  // Kalimat 4 kata (sedang)
+  { sentence: 'Polisi mengatur lalu lintas', image: '👮', hint: 'Di jalan raya', words: ['Polisi', 'mengatur', 'lalu', 'lintas'] },
+  { sentence: 'Pilot menerbangkan pesawat terbang', image: '✈️', hint: 'Di langit', words: ['Pilot', 'menerbangkan', 'pesawat', 'terbang'] },
+  { sentence: 'Kakek menyiram tanaman bunga', image: '🌱', hint: 'Di kebun', words: ['Kakek', 'menyiram', 'tanaman', 'bunga'] },
+  { sentence: 'Ibu mencuci baju kotor', image: '👕', hint: 'Kegiatan rumah', words: ['Ibu', 'mencuci', 'baju', 'kotor'] },
+  { sentence: 'Pemadam memadamkan api besar', image: '🚒', hint: 'Saat kebakaran', words: ['Pemadam', 'memadamkan', 'api', 'besar'] },
+  { sentence: 'Anak membaca buku cerita', image: '📚', hint: 'Kegiatan belajar', words: ['Anak', 'membaca', 'buku', 'cerita'] },
+  { sentence: 'Ayah memperbaiki sepeda rusak', image: '🔧', hint: 'Di garasi', words: ['Ayah', 'memperbaiki', 'sepeda', 'rusak'] },
+  { sentence: 'Ibu membeli sayur segar', image: '🥬', hint: 'Di pasar', words: ['Ibu', 'membeli', 'sayur', 'segar'] },
+  { sentence: 'Anak menggambar pemandangan indah', image: '🎨', hint: 'Kegiatan seni', words: ['Anak', 'menggambar', 'pemandangan', 'indah'] },
+  { sentence: 'Kakak bermain musik gitar', image: '🎸', hint: 'Hobi musik', words: ['Kakak', 'bermain', 'musik', 'gitar'] },
+  { sentence: 'Nenek memasak sup ayam', image: '🍲', hint: 'Di dapur', words: ['Nenek', 'memasak', 'sup', 'ayam'] },
+  { sentence: 'Adik menonton film kartun', image: '📺', hint: 'Di ruang tamu', words: ['Adik', 'menonton', 'film', 'kartun'] },
+  { sentence: 'Petani memanen buah mangga', image: '🥭', hint: 'Di kebun', words: ['Petani', 'memanen', 'buah', 'mangga'] },
+  { sentence: 'Dokter memberikan obat pasien', image: '💊', hint: 'Di rumah sakit', words: ['Dokter', 'memberikan', 'obat', 'pasien'] },
+  { sentence: 'Guru menjelaskan pelajaran matematika', image: '📐', hint: 'Di kelas', words: ['Guru', 'menjelaskan', 'pelajaran', 'matematika'] },
+  // Kalimat 5 kata (sulit)
+  { sentence: 'Anak bermain bola di lapangan', image: '⚽', hint: 'Olahraga outdoor', words: ['Anak', 'bermain', 'bola', 'di', 'lapangan'] },
+  { sentence: 'Ibu memasak makanan yang lezat', image: '🍳', hint: 'Di dapur rumah', words: ['Ibu', 'memasak', 'makanan', 'yang', 'lezat'] },
+  { sentence: 'Ayah pergi bekerja setiap hari', image: '💼', hint: 'Kegiatan rutin', words: ['Ayah', 'pergi', 'bekerja', 'setiap', 'hari'] },
+  { sentence: 'Kakak belajar dengan sangat rajin', image: '📖', hint: 'Anak pintar', words: ['Kakak', 'belajar', 'dengan', 'sangat', 'rajin'] },
+  { sentence: 'Adik tidur siang di kamar', image: '🛏️', hint: 'Waktu istirahat', words: ['Adik', 'tidur', 'siang', 'di', 'kamar'] },
+  { sentence: 'Kucing berlari mengejar tikus kecil', image: '🐱', hint: 'Berburu mangsa', words: ['Kucing', 'berlari', 'mengejar', 'tikus', 'kecil'] },
+  { sentence: 'Burung berkicau di atas pohon', image: '🌳', hint: 'Pagi yang cerah', words: ['Burung', 'berkicau', 'di', 'atas', 'pohon'] },
+  { sentence: 'Anak makan buah yang segar', image: '🍎', hint: 'Makanan sehat', words: ['Anak', 'makan', 'buah', 'yang', 'segar'] },
+  { sentence: 'Ibu menyapu halaman rumah pagi', image: '🧹', hint: 'Bersih-bersih', words: ['Ibu', 'menyapu', 'halaman', 'rumah', 'pagi'] },
+  { sentence: 'Ayah mengajarkan adik naik sepeda', image: '🚴', hint: 'Belajar keterampilan', words: ['Ayah', 'mengajarkan', 'adik', 'naik', 'sepeda'] },
 ];
 
 const shuffleArray = <T,>(array: T[]): T[] => {
