@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { GameCard } from '@/components/game/GameCard';
 import { useGame } from '@/contexts/GameContext';
 import { useSound } from '@/hooks/useSound';
-import { Calculator, BookOpen, Star, Volume2, VolumeX, Music, Music2, RotateCcw, Sparkles, FileText } from 'lucide-react';
+import { BookOpen, Star, Volume2, VolumeX, Music, Music2, RotateCcw, Sparkles, FileText, AlignLeft } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const floatingEmojis = ['⭐', '🌟', '✨', '📚', '✏️', '🎨', '🌈', '🎯', '💡', '🎮', '🚀', '🎈'];
@@ -117,7 +117,7 @@ const Index = () => {
               description="Susun suku kata menjadi kata"
               icon={<BookOpen className="w-8 h-8 text-primary-foreground" />}
               variant="reading"
-              stars={progress.reading.stars}
+              stars={progress.wordArrange.stars}
               onClick={() => handleGameSelect('/game/reading')}
             />
             
@@ -126,7 +126,7 @@ const Index = () => {
               description="Baca kata dan pilih gambar"
               icon={<BookOpen className="w-8 h-8 text-primary-foreground" />}
               variant="reading"
-              stars={progress.reading.stars}
+              stars={progress.readMatch.stars}
               onClick={() => handleGameSelect('/game/readmatch')}
             />
             
@@ -135,26 +135,17 @@ const Index = () => {
               description="Baca cerita pendek dan jawab pertanyaan"
               icon={<FileText className="w-8 h-8 text-primary-foreground" />}
               variant="reading"
-              stars={progress.reading.stars}
+              stars={progress.story.stars}
               onClick={() => handleGameSelect('/game/story')}
             />
-          </div>
-        </div>
-
-        {/* Other Games Section */}
-        <div className="mb-6">
-          <h3 className="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
-            <Star className="w-5 h-5 text-warning animate-pulse" />
-            Game Lainnya
-          </h3>
-          <div className="grid grid-cols-1 gap-4">
+            
             <GameCard
-              title="Berhitung"
-              description="Belajar angka dan matematika dasar"
-              icon={<Calculator className="w-8 h-8 text-primary-foreground" />}
-              variant="counting"
-              stars={progress.counting.stars}
-              onClick={() => handleGameSelect('/game/counting')}
+              title="Susun Kalimat"
+              description="Susun kata menjadi kalimat yang benar"
+              icon={<AlignLeft className="w-8 h-8 text-primary-foreground" />}
+              variant="reading"
+              stars={progress.sentence.stars}
+              onClick={() => handleGameSelect('/game/sentence')}
             />
           </div>
         </div>
@@ -166,16 +157,28 @@ const Index = () => {
           </h3>
           <div className="grid grid-cols-2 gap-3">
             <StatItem 
-              label="Berhitung" 
-              value={progress.counting.completed} 
-              color="bg-primary" 
-              icon="🔢"
+              label="Susun Kata" 
+              value={progress.wordArrange.completed} 
+              color="bg-secondary" 
+              icon="🔤"
             />
             <StatItem 
-              label="Membaca" 
-              value={progress.reading.completed} 
-              color="bg-secondary" 
+              label="Baca & Cocokkan" 
+              value={progress.readMatch.completed} 
+              color="bg-primary" 
+              icon="🖼️"
+            />
+            <StatItem 
+              label="Soal Cerita" 
+              value={progress.story.completed} 
+              color="bg-accent" 
               icon="📖"
+            />
+            <StatItem 
+              label="Susun Kalimat" 
+              value={progress.sentence.completed} 
+              color="bg-success" 
+              icon="📝"
             />
           </div>
         </div>

@@ -1,6 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 interface GameProgress {
+  wordArrange: { stars: number; level: number; completed: number };
+  readMatch: { stars: number; level: number; completed: number };
+  story: { stars: number; level: number; completed: number };
+  sentence: { stars: number; level: number; completed: number };
+  // Legacy keys for backward compatibility
   counting: { stars: number; level: number; completed: number };
   reading: { stars: number; level: number; completed: number };
   writing: { stars: number; level: number; completed: number };
@@ -18,6 +23,11 @@ interface GameContextType {
 }
 
 const defaultProgress: GameProgress = {
+  wordArrange: { stars: 0, level: 1, completed: 0 },
+  readMatch: { stars: 0, level: 1, completed: 0 },
+  story: { stars: 0, level: 1, completed: 0 },
+  sentence: { stars: 0, level: 1, completed: 0 },
+  // Legacy
   counting: { stars: 0, level: 1, completed: 0 },
   reading: { stars: 0, level: 1, completed: 0 },
   writing: { stars: 0, level: 1, completed: 0 },
@@ -29,7 +39,12 @@ const GameContext = createContext<GameContextType | undefined>(undefined);
 export const GameProvider = ({ children }: { children: ReactNode }) => {
   const [progress, setProgress] = useState<GameProgress>(() => {
     const saved = localStorage.getItem('eduGameProgress');
-    return saved ? JSON.parse(saved) : defaultProgress;
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      // Merge with default to ensure new keys exist
+      return { ...defaultProgress, ...parsed };
+    }
+    return defaultProgress;
   });
   
   const [playerName, setPlayerName] = useState(() => {

@@ -147,7 +147,7 @@ export const ReadMatchGame = () => {
     if (isCorrect) {
       playCorrect();
       setCorrectCount(prev => prev + 1);
-      addStarsRef.current('reading', 1);
+      addStarsRef.current('readMatch', 1);
     } else {
       playWrong();
     }
@@ -163,7 +163,7 @@ export const ReadMatchGame = () => {
       playLevelComplete();
       setIsComplete(true);
       if (!hasCompletedLevel) {
-        completeLevel('reading');
+        completeLevel('readMatch');
         setHasCompletedLevel(true);
       }
     } else {
@@ -182,7 +182,7 @@ export const ReadMatchGame = () => {
       
       <GameHeader 
         title="Baca & Cocokkan"
-        stars={progress.reading.stars}
+        stars={progress.readMatch.stars}
         variant="reading"
         isMuted={isMuted}
         isBgMusicPlaying={isBgMusicPlaying}
@@ -206,9 +206,10 @@ export const ReadMatchGame = () => {
             </span>
             <button
               onClick={handleSpeakWord}
-              className="p-3 bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors active:scale-95 shadow-md"
+              className="w-12 h-12 bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors active:scale-95 shadow-md flex items-center justify-center"
+              aria-label="Dengarkan kata"
             >
-              <Volume2 className="w-6 h-6 text-secondary" />
+              <Volume2 className="w-6 h-6 text-secondary pointer-events-none" />
             </button>
           </div>
           <p className="text-xs text-muted-foreground mt-2">

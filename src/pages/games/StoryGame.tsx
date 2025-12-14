@@ -378,7 +378,7 @@ export const StoryGame = () => {
     if (isCorrect) {
       playCorrect();
       setCorrectCount(prev => prev + 1);
-      addStarsRef.current('reading', 1);
+      addStarsRef.current('story', 1);
     } else {
       playWrong();
     }
@@ -394,7 +394,7 @@ export const StoryGame = () => {
       playLevelComplete();
       setIsComplete(true);
       if (!hasCompletedLevel) {
-        completeLevel('reading');
+        completeLevel('story');
         setHasCompletedLevel(true);
       }
     } else {
@@ -414,7 +414,7 @@ export const StoryGame = () => {
       
       <GameHeader 
         title="Soal Cerita"
-        stars={progress.reading.stars}
+        stars={progress.story.stars}
         variant="reading"
         isMuted={isMuted}
         isBgMusicPlaying={isBgMusicPlaying}
@@ -442,9 +442,10 @@ export const StoryGame = () => {
             </div>
             <button
               onClick={handleSpeakStory}
-              className="p-3 bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors active:scale-95 shadow-md"
+              className="w-12 h-12 bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors active:scale-95 shadow-md flex items-center justify-center shrink-0"
+              aria-label="Dengarkan cerita"
             >
-              <Volume2 className="w-5 h-5 text-secondary" />
+              <Volume2 className="w-5 h-5 text-secondary pointer-events-none" />
             </button>
           </div>
           
