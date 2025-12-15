@@ -251,11 +251,11 @@ export const SentenceArrangeGame = () => {
       <main className="flex-1 flex flex-col items-center justify-center p-4 gap-4 relative z-10">
         {/* Image Display */}
         <div className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-card p-6 w-full max-w-sm text-center relative border-2 border-secondary/20">
-          {/* Audio Button - Fixed click area */}
+          {/* Audio Button - PERBAIKAN DI SINI */}
           <button
             onClick={handleSpeakSentence}
-            className="absolute top-4 right-4 w-12 h-12 bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors active:scale-95 shadow-md flex items-center justify-center"
-            aria-label="Dengarkan kalimat"
+            // Tambahkan 'z-20' di class di bawah ini 👇
+            className="absolute top-4 right-4 z-20 w-12 h-12 bg-secondary/20 rounded-full hover:bg-secondary/30 transition-colors active:scale-95 shadow-md flex items-center justify-center"
           >
             <Volume2 className="w-6 h-6 text-secondary pointer-events-none" />
           </button>
