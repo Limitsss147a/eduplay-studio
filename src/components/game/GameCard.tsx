@@ -12,10 +12,10 @@ interface GameCardProps {
 }
 
 const variantStyles = {
-  counting: 'from-primary to-warning hover:shadow-primary/40',
-  reading: 'from-secondary to-[hsl(195,80%,50%)] hover:shadow-secondary/40',
-  writing: 'from-game-writing to-accent hover:shadow-game-writing/40',
-  drawing: 'from-accent to-[hsl(340,80%,60%)] hover:shadow-accent/40',
+  counting: 'from-[hsl(280,70%,55%)] to-[hsl(320,80%,60%)] hover:shadow-[hsl(280,70%,55%)]/40', // Purple to Pink
+  reading: 'from-[hsl(170,70%,45%)] to-[hsl(200,80%,50%)] hover:shadow-[hsl(170,70%,45%)]/40', // Teal to Blue
+  writing: 'from-[hsl(35,90%,55%)] to-[hsl(15,85%,55%)] hover:shadow-[hsl(35,90%,55%)]/40', // Orange to Red-Orange
+  drawing: 'from-[hsl(340,75%,55%)] to-[hsl(280,70%,55%)] hover:shadow-[hsl(340,75%,55%)]/40', // Rose to Purple
 };
 
 export const GameCard = ({ title, description, icon, variant, stars, onClick }: GameCardProps) => {
