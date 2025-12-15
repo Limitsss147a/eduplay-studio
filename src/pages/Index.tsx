@@ -116,7 +116,7 @@ const Index = () => {
               title="Susun Kata"
               description="Susun suku kata menjadi kata"
               icon={<BookOpen className="w-8 h-8 text-primary-foreground" />}
-              variant="reading"
+              variant="wordArrange"
               stars={progress.wordArrange.stars}
               onClick={() => handleGameSelect('/game/reading')}
             />
@@ -125,7 +125,7 @@ const Index = () => {
               title="Baca & Cocokkan"
               description="Baca kata dan pilih gambar"
               icon={<BookOpen className="w-8 h-8 text-primary-foreground" />}
-              variant="reading"
+              variant="readMatch"
               stars={progress.readMatch.stars}
               onClick={() => handleGameSelect('/game/readmatch')}
             />
@@ -134,7 +134,7 @@ const Index = () => {
               title="Soal Cerita"
               description="Baca cerita pendek dan jawab pertanyaan"
               icon={<FileText className="w-8 h-8 text-primary-foreground" />}
-              variant="reading"
+              variant="story"
               stars={progress.story.stars}
               onClick={() => handleGameSelect('/game/story')}
             />
@@ -143,7 +143,7 @@ const Index = () => {
               title="Susun Kalimat"
               description="Susun kata menjadi kalimat yang benar"
               icon={<AlignLeft className="w-8 h-8 text-primary-foreground" />}
-              variant="reading"
+              variant="sentence"
               stars={progress.sentence.stars}
               onClick={() => handleGameSelect('/game/sentence')}
             />
