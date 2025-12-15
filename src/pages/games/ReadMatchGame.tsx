@@ -138,7 +138,7 @@ export const ReadMatchGame = () => {
     playCorrect, playWrong, playClick, playLevelComplete,
     isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic, startBgMusic 
   } = useSound();
-  const { speak, speakSyllables } = useSpeech();
+  const { speak } = useSpeech();
   
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -173,9 +173,9 @@ export const ReadMatchGame = () => {
     playClick();
     if (questions.length > 0 && currentIndex < questions.length) {
       const current = questions[currentIndex];
-      speakSyllables(current.word, current.syllables);
+      speak(current.word, 0.7); // Rate lambat agar mudah didengar anak
     }
-  }, [questions, currentIndex, playClick, speakSyllables]);
+  }, [questions, currentIndex, playClick, speak]);
 
   const handleAnswer = (selectedImage: string) => {
     if (feedback !== null || selectedAnswer !== null) return;
