@@ -146,7 +146,7 @@ export const SentenceArrangeGame = () => {
     playClick();
     if (questions.length > 0 && currentIndex < questions.length) {
       const current = questions[currentIndex];
-      speak(current.sentence);
+      speak(current.sentence, 0.7); // Rate lambat agar mudah didengar anak
     }
   }, [questions, currentIndex, playClick, speak]);
 

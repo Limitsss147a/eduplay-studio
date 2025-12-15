@@ -56,14 +56,8 @@ export const useSpeech = () => {
     }
   }, []);
 
-  const speakSyllables = useCallback(async (word: string, syllables: string[]) => {
-    // Trik: Tambahkan titik/koma agar mesin TTS memberikan jeda natural
-    // Contoh: "A. PEL. APEL"
-    const textWithPause = `${syllables.join('. ')}. ${word}`;
-    
-    // Bicara sedikit lebih lambat untuk pengejaan
-    await speak(textWithPause, 0.75); 
-  }, [speak]);
+  // Fungsi speakSyllables dihapus karena ejaan terdeteksi bahasa Inggris
+  // Langsung baca kata saja dengan rate lambat
 
   const stop = useCallback(async () => {
     try {
@@ -79,7 +73,6 @@ export const useSpeech = () => {
 
   return { 
     speak, 
-    speakSyllables, 
     stop, // alias cancel
     cancel: stop,
     isSupported 
