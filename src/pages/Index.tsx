@@ -11,11 +11,18 @@ const floatingEmojis = ['⭐', '🌟', '✨', '📚', '✏️', '🎨', '🌈', 
 const Index = () => {
   const navigate = useNavigate();
   const { progress, totalStars, playerName, resetProgress } = useGame();
-  const { playSelect, playClick, isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic } = useSound();
+  const { playClick, isMuted, toggleMute, isBgMusicPlaying, toggleBgMusic, playSelectWordArrange, playSelectReadMatch, playSelectStory, playSelectSentence } = useSound();
   const [showResetConfirm, setShowResetConfirm] = useState(false);
 
+  const gameSelectSounds: Record<string, () => void> = {
+    '/game/reading': playSelectWordArrange,
+    '/game/readmatch': playSelectReadMatch,
+    '/game/story': playSelectStory,
+    '/game/sentence': playSelectSentence,
+  };
+
   const handleGameSelect = (path: string) => {
-    playSelect();
+    gameSelectSounds[path]?.();
     navigate(path);
   };
 
