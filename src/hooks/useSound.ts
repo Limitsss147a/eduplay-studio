@@ -65,6 +65,36 @@ export const useSound = () => {
     createOscillator(ctx, 600, 0.08, 'sine');
   }, [isMuted, getAudioContext]);
 
+  const playSelectWordArrange = useCallback(() => {
+    if (isMuted) return;
+    const ctx = getAudioContext();
+    createOscillator(ctx, 523, 0.08, 'sine');
+    setTimeout(() => createOscillator(ctx, 659, 0.08, 'sine'), 60);
+    setTimeout(() => createOscillator(ctx, 784, 0.1, 'sine'), 120);
+  }, [isMuted, getAudioContext]);
+
+  const playSelectReadMatch = useCallback(() => {
+    if (isMuted) return;
+    const ctx = getAudioContext();
+    createOscillator(ctx, 440, 0.1, 'triangle');
+    setTimeout(() => createOscillator(ctx, 660, 0.12, 'triangle'), 80);
+  }, [isMuted, getAudioContext]);
+
+  const playSelectStory = useCallback(() => {
+    if (isMuted) return;
+    const ctx = getAudioContext();
+    createOscillator(ctx, 350, 0.12, 'sine');
+    setTimeout(() => createOscillator(ctx, 440, 0.1, 'sine'), 70);
+    setTimeout(() => createOscillator(ctx, 523, 0.15, 'sine'), 140);
+  }, [isMuted, getAudioContext]);
+
+  const playSelectSentence = useCallback(() => {
+    if (isMuted) return;
+    const ctx = getAudioContext();
+    createOscillator(ctx, 700, 0.06, 'square');
+    setTimeout(() => createOscillator(ctx, 900, 0.08, 'square'), 50);
+  }, [isMuted, getAudioContext]);
+
   const playStar = useCallback(() => {
     if (isMuted) return;
     const ctx = getAudioContext();
